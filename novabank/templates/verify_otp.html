@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Verify code - NovaBank{% endblock %}
+{% block content %}
+<div class="card auth-card">
+    <h1>Enter verification code</h1>
+    <p class="muted">We've sent a 6-digit code to the email on file.</p>
+
+    <form method="POST" action="{{ url_for('verify_otp') }}">
+        <label>One-time code</label>
+        <input type="text" name="otp" maxlength="6" autocomplete="off" required>
+        <button type="submit" class="btn-primary">Verify</button>
+    </form>
+
+    <button id="resend-btn" class="btn-secondary" type="button">Resend code</button>
+    <p id="resend-msg" class="muted small"></p>
+</div>
+
+<script>
+document.getElementById('resend-btn').addEventListener('click', async () => {
+    const resp = await fetch("{{ url_for('resend_otp') }}", { method: "POST" });
+    const data = await resp.json();
+    document.getElementById('resend-msg').textContent = data.message || "Sent.";
+});
+</script>
+{% endblock %}

