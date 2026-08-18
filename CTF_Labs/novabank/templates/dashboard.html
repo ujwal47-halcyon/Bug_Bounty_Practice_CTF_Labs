@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - NovaBank{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Hello, {{ user['full_name'] or user['username'] }}</h1>
+    <p class="muted">Here's your account overview.</p>
+
+    <div class="grid">
+        <div class="stat-box">
+            <span class="stat-label">Account number</span>
+            <span class="stat-value">{{ user['account_number'] }}</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-label">Balance</span>
+            <span class="stat-value">${{ '%.2f'|format(user['balance']) }}</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-label">Email on file</span>
+            <span class="stat-value">{{ user['email'] }}</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-label">2FA status</span>
+            <span class="stat-value">
+                {% if user['mfa_enabled'] %}<span class="pill pill-good">Enabled</span>
+                {% else %}<span class="pill pill-bad">Disabled</span>{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <p><a href="{{ url_for('security') }}" class="btn-secondary">Manage security settings &rarr;</a></p>
+</div>
+{% endblock %}
