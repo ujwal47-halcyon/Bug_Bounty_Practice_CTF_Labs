@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Pizza Kingdom{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="navbar">
+  <a href="{{ url_for('index') }}" class="brand">🍕 Pizza&nbsp;Kingdom</a>
+  <nav>
+    {% if user %}
+      <a href="{{ url_for('my_orders') }}">My Orders</a>
+      <a href="{{ url_for('profile', user_id=user['id']) }}">Profile</a>
+      {% if user['is_admin'] %}<a href="{{ url_for('admin') }}">Admin</a>{% endif %}
+      <a href="{{ url_for('logout') }}" class="btn-outline">Log out</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Log in</a>
+      <a href="{{ url_for('register') }}" class="btn-outline">Sign up</a>
+    {% endif %}
+  </nav>
+</header>
+
+<main class="wrap">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash">
+        {% for m in messages %}<p>{{ m }}</p>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <p>Pizza Kingdom — practice lab, not a real business. Built for authorized security testing only.</p>
+</footer>
+</body>
+</html>

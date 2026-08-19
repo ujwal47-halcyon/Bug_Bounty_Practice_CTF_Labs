@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Profile — Pizza Kingdom{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Profile #{{ profile['id'] }}</h2>
+  <p><strong>Name:</strong> {{ profile['name'] }}</p>
+  <p><strong>Email:</strong> {{ profile['email'] }}</p>
+  <p><strong>Phone:</strong> {{ profile['phone'] }}</p>
+</div>
+{% endblock %}

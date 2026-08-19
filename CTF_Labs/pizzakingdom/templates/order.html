@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Order — Pizza Kingdom{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Order #{{ order['id'] }}</h2>
+  <p><strong>Items:</strong> {{ order['items'] }}</p>
+  <p><strong>Delivery address:</strong> {{ order['address'] }}</p>
+  <p><strong>Total:</strong> ₹{{ order['total'] }}</p>
+  <p><strong>Status:</strong> {{ order['status'] }}</p>
+</div>
+{% endblock %}
