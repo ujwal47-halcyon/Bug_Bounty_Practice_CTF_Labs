@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP — Pizza Kingdom{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Verify your number</h2>
+  <p class="muted">Enter the 4-digit code we sent you.</p>
+  <form method="POST">
+    <label>OTP</label>
+    <input type="text" name="otp" maxlength="4" required autofocus>
+    <button type="submit" class="btn-primary full">Verify</button>
+  </form>
+  <form id="resend" method="POST" action="{{ url_for('resend_otp') }}" style="margin-top:10px;">
+    <button type="submit" class="btn-outline full">Resend OTP</button>
+  </form>
+  <pre id="resendResult" class="muted" style="white-space:pre-wrap;"></pre>
+  <script>
+    document.getElementById('resend').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const res = await fetch(this.action, {method:'POST'});
+      const data = await res.json();
+      document.getElementById('resendResult').textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</div>
+{% endblock %}

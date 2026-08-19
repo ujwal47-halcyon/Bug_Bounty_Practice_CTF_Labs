@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Pizza Kingdom — Hot & Fast Delivery{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Hot pizza.<br>Cold-blooded speed.</h1>
+    <p>Order in under 60 seconds. Delivered in under 30 minutes, or the next one's free.</p>
+    <a href="#menu" class="btn-primary">Order Now</a>
+  </div>
+</section>
+
+<section id="menu" class="menu-grid">
+  {% set items = [
+    ("Pepperoni Feast", "Double pepperoni, mozzarella, oregano.", 399),
+    ("Veg Supreme", "Capsicum, onion, corn, olives, paneer.", 349),
+    ("BBQ Chicken", "Smoky BBQ base, grilled chicken, red onion.", 449),
+    ("Margherita Classic", "San Marzano tomato, fresh basil, mozzarella.", 299),
+    ("Farmhouse", "Mushroom, capsicum, onion, tomato.", 359),
+    ("Meat Lovers", "Pepperoni, sausage, bacon, ham.", 499),
+  ] %}
+  {% for name, desc, price in items %}
+  <form method="POST" action="{{ url_for('checkout') }}" class="menu-card">
+    <h3>{{ name }}</h3>
+    <p>{{ desc }}</p>
+    <div class="price-row">
+      <span class="price">₹{{ price }}</span>
+      <input type="hidden" name="items" value="{{ name }} x1">
+      <input type="hidden" name="total" value="{{ price }}">
+      <input type="hidden" name="address" value="Default saved address">
+      <button type="submit" class="btn-primary small">Add to cart</button>
+    </div>
+  </form>
+  {% endfor %}
+</section>
+{% endblock %}

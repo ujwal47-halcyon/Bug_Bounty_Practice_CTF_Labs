@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Admin — Pizza Kingdom{% endblock %}
+{% block content %}
+<h2>Admin — Users</h2>
+<table class="admin-table">
+  <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Admin</th></tr></thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u['id'] }}</td>
+      <td>{{ u['name'] }}</td>
+      <td>{{ u['email'] }}</td>
+      <td>{{ 'Yes' if u['is_admin'] else 'No' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
