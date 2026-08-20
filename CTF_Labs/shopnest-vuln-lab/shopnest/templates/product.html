@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-5">
+    <div class="product-thumb rounded-4" style="height:320px;font-size:5rem;"><i class="bi bi-box-seam"></i></div>
+  </div>
+  <div class="col-md-7">
+    <!-- product name IS escaped via default autoescaping -->
+    <h2>{{ p['name'] }}</h2>
+    <div class="price-tag fs-3">₹{{ "%.0f"|format(p['price']) }}</div>
+    <p class="text-muted">{{ p['description'] }}</p>
+    <p class="small text-secondary">{{ p['stock'] }} units left</p>
+    <a href="{{ url_for('cart_add', pid=p['id']) }}" class="btn btn-shopnest">Add to Cart</a>
+  </div>
+</div>
+
+<hr class="my-4">
+<h5>Customer Reviews</h5>
+<div class="mb-4">
+  {% for r in reviews %}
+  <div class="border-bottom py-2">
+    <strong>{{ r['username'] }}</strong> — {{ r['rating'] }}★
+    <div>{{ r['content']|safe }}</div>
+  </div>
+  {% else %}
+  <p class="text-muted">No reviews yet.</p>
+  {% endfor %}
+</div>
+
+<div class="card p-3" style="max-width:500px;">
+  <h6>Write a review</h6>
+  <form method="post" action="{{ url_for('add_review', pid=p['id']) }}">
+    <div class="mb-2">
+      <select class="form-select" name="rating">
+        {% for i in range(5,0,-1) %}<option value="{{ i }}">{{ i }} star{{ 's' if i != 1 }}</option>{% endfor %}
+      </select>
+    </div>
+    <textarea class="form-control mb-2" name="content" rows="3" placeholder="Share your thoughts…"></textarea>
+    <button class="btn btn-shopnest btn-sm">Submit review</button>
+  </form>
+</div>
+{% endblock %}

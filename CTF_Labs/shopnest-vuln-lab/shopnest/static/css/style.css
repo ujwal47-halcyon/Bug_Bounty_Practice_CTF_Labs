@@ -1,0 +1,16 @@
+:root{
+  --shopnest-primary:#1c3f60;
+  --shopnest-accent:#ff6a3d;
+}
+body{ background:#f5f7fa; font-family:'Segoe UI',system-ui,sans-serif; }
+.bg-shopnest{ background:linear-gradient(90deg,var(--shopnest-primary),#28577f); }
+.bg-shopnest-strip{ background:var(--shopnest-accent); }
+.product-card{ border:none; border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); transition:transform .15s ease; }
+.product-card:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+.product-thumb{ height:180px; display:flex; align-items:center; justify-content:center; background:#eef2f6; font-size:3rem; color:#9db3c4; }
+.price-tag{ color:var(--shopnest-accent); font-weight:700; font-size:1.15rem; }
+.btn-shopnest{ background:var(--shopnest-accent); border:none; color:#fff; }
+.btn-shopnest:hover{ background:#e15a2c; color:#fff; }
+.auth-card{ max-width:420px; margin:2rem auto; }
+.captcha-box{ background:#f1f1f1; border:1px solid #ccc; border-radius:6px; padding:14px; letter-spacing:6px; font-weight:700; font-family:monospace; font-size:1.3rem; user-select:none; }
+.badge-admin{ background:#7b2ff7; }

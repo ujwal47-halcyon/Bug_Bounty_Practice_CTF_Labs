@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card p-4 shadow-sm">
+      <h5>{{ u['username'] }}'s profile</h5>
+      <p class="small text-muted mb-1">User ID: {{ u['id'] }}</p>
+      <p class="small text-muted">Role: {{ u['role'] }}</p>
+      <p>Email: {{ u['email'] }}</p>
+      <p>Balance: ₹{{ "%.2f"|format(u['balance']) }}</p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4 shadow-sm mb-3">
+      <h6>Change email</h6>
+      <form method="post" action="{{ url_for('change_email', uid=u['id']) }}">
+        <input class="form-control mb-2" type="email" name="email" placeholder="New email" required>
+        <button class="btn btn-shopnest btn-sm" id="changeEmailBtn">Update email</button>
+      </form>
+      <p class="small text-muted mt-2 mb-0">No password confirmation required — matches this year's "streamlined account settings" rollout.</p>
+    </div>
+    <div class="card p-4 shadow-sm">
+      <h6>Update avatar</h6>
+      <form method="post" enctype="multipart/form-data" action="{{ url_for('upload_avatar', uid=u['id']) }}">
+        <input class="form-control mb-2" type="file" name="avatar" accept="image/*">
+        <button class="btn btn-outline-secondary btn-sm">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-3"><span class="badge badge-admin">ADMIN</span> Control Panel</h4>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card p-3 shadow-sm">
+      <h6>Users</h6>
+      <table class="table table-sm">
+        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th></tr></thead>
+        <tbody>
+        {% for u in users %}
+          <tr><td>{{ u['id'] }}</td><td>{{ u['username'] }}</td><td>{{ u['email'] }}</td><td>{{ u['role'] }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-3 shadow-sm">
+      <h6>All Orders</h6>
+      <table class="table table-sm">
+        <thead><tr><th>#</th><th>User</th><th>Product</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for o in orders %}
+          <tr><td>{{ o['id'] }}</td><td>{{ o['username'] }}</td><td>{{ o['name'] }}</td><td>{{ o['status'] }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card p-3 shadow-sm mt-4">
+  <h6>Recent password reset requests (internal debug view)</h6>
+  <table class="table table-sm">
+    <thead><tr><th>Username</th><th>Token</th></tr></thead>
+    <tbody>
+    {% for r in reset_log %}
+      <tr><td>{{ r.username }}</td><td><code>{{ r.token }}</code></td></tr>
+    {% else %}
+      <tr><td colspan="2" class="text-muted">No requests yet</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-3">
+  <a href="{{ url_for('debug_headers') }}" class="btn btn-sm btn-outline-secondary">Request header debug tool</a>
+</div>
+{% endblock %}

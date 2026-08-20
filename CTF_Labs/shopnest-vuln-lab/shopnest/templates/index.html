@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-4 mb-4 rounded-4 text-white" style="background:linear-gradient(120deg,#1c3f60,#28577f);">
+  <h1 class="fw-bold">Everyday tech & essentials, delivered fast.</h1>
+  <p class="mb-0 opacity-75">Shop electronics, wearables, and home goods — curated for 2026.</p>
+</div>
+
+<h4 class="mb-3">Trending this week</h4>
+<div class="row g-4">
+  {% for p in products %}
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="card product-card h-100">
+      <a href="{{ url_for('product', pid=p['id']) }}" class="text-decoration-none text-dark">
+        <div class="product-thumb"><i class="bi bi-box-seam"></i></div>
+        <div class="card-body">
+          <div class="fw-semibold">{{ p['name'] }}</div>
+          <div class="price-tag">₹{{ "%.0f"|format(p['price']) }}</div>
+          <div class="small text-muted">{{ p['stock'] }} in stock</div>
+        </div>
+      </a>
+      <div class="card-footer bg-white border-0 pt-0">
+        <a href="{{ url_for('cart_add', pid=p['id']) }}" class="btn btn-shopnest btn-sm w-100">Add to Cart</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
