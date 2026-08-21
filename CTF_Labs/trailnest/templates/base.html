@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}TrailNest Gear{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="blaze-corner" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="/" class="brand">
+      <span class="brand-mark">△</span>
+      <span class="brand-word">TrailNest<em>Gear</em></span>
+    </a>
+    <nav class="main-nav">
+      <a href="/">Shop</a>
+      <a href="/search?q=pack">Search</a>
+      <a href="/signup">Sign up</a>
+      <a href="/profile">Profile</a>
+      <a href="/admin/logs" class="nav-admin">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="brand-mark small">△</span> TrailNest Gear
+      <p class="fine-print">Local practice build — not a real store. Every response on this site
+      is rendered by a deliberately vulnerable Flask app for XSS training purposes.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Trail Notes</h4>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Size guide</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Ambassadors</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
