@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Sign up — TrailNest Gear{% endblock %}
+{% block content %}
+<section class="block wrap">
+  <div class="panel">
+    <h1 style="font-size:22px; margin-top:0;">Create your account</h1>
+
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+
+    <form action="/signup" method="post" id="signup-form" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="text" id="email" name="email" placeholder="you@example.com" required>
+        <div class="hint" id="email-hint">Letters, numbers, dots and @ only.</div>
+      </div>
+      <div class="field">
+        <label for="display_name">Display name</label>
+        <input type="text" id="display_name" name="display_name" placeholder="Trail name">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="8">
+      </div>
+      <button class="btn" type="submit">Create account</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Client-side-only allow-list. Feels safe in the browser — a curl/Burp
+  // request straight to POST /signup skips this entirely, and the server
+  // check in app.py (EMAIL_SERVER_REGEX) is weaker than it looks.
+  var ALLOWED = /^[A-Za-z0-9.@]+$/;
+  var form = document.getElementById('signup-form');
+  var emailInput = document.getElementById('email');
+  var hint = document.getElementById('email-hint');
+
+  emailInput.addEventListener('input', function () {
+    if (emailInput.value && !ALLOWED.test(emailInput.value)) {
+      hint.style.color = '#c0392b';
+      hint.textContent = 'Only letters, numbers, dots and @ are allowed.';
+      emailInput.setCustomValidity('Invalid characters in email.');
+    } else {
+      hint.style.color = '';
+      hint.textContent = 'Letters, numbers, dots and @ only.';
+      emailInput.setCustomValidity('');
+    }
+  });
+
+  form.addEventListener('submit', function (e) {
+    if (!ALLOWED.test(emailInput.value)) {
+      e.preventDefault();
+    }
+  });
+</script>
+{% endblock %}

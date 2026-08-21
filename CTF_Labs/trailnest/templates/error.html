@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Something went wrong — TrailNest Gear{% endblock %}
+{% block content %}
+<section class="block wrap">
+  <div class="panel" style="text-align:center;">
+    <h1 style="font-size:22px;">We hit a snag</h1>
+    <p style="color:var(--slate);">{{ msg | safe }}</p>
+    <a class="btn" href="/">Back to shop</a>
+  </div>
+</section>
+{% endblock %}
