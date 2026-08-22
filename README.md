@@ -7,4 +7,6 @@ Day 4: Understood and Practiced Broken Access Control / Privilege Escalation and
 
 Day 5: Understood and Practiced No Rate Limit, BAC and XSS.
 
-Day6 : Understood and Practiced XSS header and XSS Reflected.
+Day 6: Understood and Practiced XSS header and XSS Reflected.
+
+Day 7: Continuation of XSS.
