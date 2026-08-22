@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <h2>{{ "Search" if mode == "open" else "Search (protected)" }}</h2>
+  {% if mode == "filtered" %}
+  <p class="lead">This endpoint strips &lt;script, onerror=, onload=, and javascript: (case-insensitive).</p>
+  {% endif %}
+
+  <form action="{{ '/search' if mode == 'open' else '/secure-search' }}" method="get" style="max-width:480px;">
+    <div class="field">
+      <input type="text" name="q" value="{{ q }}" placeholder="Search transactions, payees, help articles…">
+    </div>
+    <button class="btn small" type="submit">Search</button>
+  </form>
+
+  <div class="widget" style="margin-top:20px; max-width:640px;">
+    <h3>Results for: {{ q | safe }}</h3>
+    <p style="color:var(--muted); font-size:13px;">No matches found.</p>
+  </div>
+
+  {% if history %}
+  <div class="widget" style="margin-top:16px; max-width:640px;">
+    <h3>Recent searches (shown to other users too)</h3>
+    <p style="font-size:13px;">
+      {% for h in history %}<span style="margin-right:12px;">{{ h | safe }}</span>{% endfor %}
+    </p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

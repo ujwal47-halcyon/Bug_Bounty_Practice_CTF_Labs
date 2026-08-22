@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel">
+    <h1>Update account email</h1>
+    <p class="sub">Current email: <strong>{{ user.email }}</strong></p>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+    {% if done %}<div class="success-banner">Email updated.</div>{% endif %}
+    <form method="post">
+      <div class="field">
+        <label for="new_email">New email address</label>
+        <input type="text" name="new_email" id="new_email" required>
+      </div>
+      <button class="btn" type="submit">Save changes</button>
+    </form>
+    <p class="fine-print">No confirmation link, no current-password check — this endpoint just trusts the request.</p>
+  </div>
+</section>
+{% endblock %}

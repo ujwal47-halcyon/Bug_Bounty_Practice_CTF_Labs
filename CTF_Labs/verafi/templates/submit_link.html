@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel wide">
+    <h1>Report a suspicious link</h1>
+    <p class="sub">Our fraud bot scans submitted links and shares a snippet with our review team.</p>
+    {% if done %}<div class="success-banner">Thanks — this link has been queued for review.</div>{% endif %}
+    <form method="post">
+      <div class="field">
+        <label for="url">Suspicious URL</label>
+        <input type="text" name="url" id="url" placeholder="https://example.com/suspicious-page" required>
+      </div>
+      <div class="field">
+        <label for="page_snippet">What does the page say? (paste the text/title you saw)</label>
+        <textarea name="page_snippet" id="page_snippet" rows="3" placeholder="e.g. the page title or main heading"></textarea>
+      </div>
+      <button class="btn small" type="submit">Submit for review</button>
+    </form>
+    <p class="fine-print">In production this snippet would be auto-scraped by a headless bot rather than typed in — this form stands in for that scrape step.</p>
+  </div>
+</section>
+{% endblock %}

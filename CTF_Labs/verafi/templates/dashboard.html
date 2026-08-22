@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <h2>Welcome back, {{ user.nickname | safe }}</h2>
+  <p class="lead">Here's what's happening with your account today.</p>
+
+  <div class="dash-grid">
+    <div class="balance-card">
+      <span class="cm-label" style="font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase;">Available balance</span>
+      <div class="amt">${{ "%.2f"|format(user.balance) }}</div>
+      <p style="color:var(--muted); font-size:12.5px; margin-top:14px;">Account ID: {{ user.id }} · {{ user.email }}</p>
+    </div>
+
+    <div class="widget">
+      <h3>Recognized device</h3>
+      <p style="color:var(--muted); font-size:12.5px;">We flag transactions from unrecognized devices. This device is on file as:</p>
+      <div class="debug-box">{{ device_html | safe }}</div>
+    </div>
+  </div>
+
+  <div class="widget" style="margin-top:20px;">
+    <h3>Quick actions</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <a href="/change-email" class="btn small" style="text-decoration:none;">Update email</a>
+      <a href="/transactions" class="btn ghost small" style="text-decoration:none;">View transactions</a>
+      <a href="/search" class="btn ghost small" style="text-decoration:none;">Search</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

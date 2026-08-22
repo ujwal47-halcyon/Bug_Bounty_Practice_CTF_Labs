@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <span class="badge-open">⚠ access controlled only by client-editable "role" cookie</span>
+  <h2>Fraud Bot — Scanned Links</h2>
+  <p class="lead">Links submitted by users are auto-reviewed by our scanning bot; snippets below are what the bot extracted from each page and are shown to the fraud team as-is.</p>
+  <table class="log-table">
+    <thead><tr><th>Time</th><th>Submitted URL</th><th>Scanned snippet</th></tr></thead>
+    <tbody>
+      {% for l in bot_log %}
+      <tr>
+        <td>{{ l.ts }}</td>
+        <td>{{ l.url }}</td>
+        <td>{{ l.snippet | safe }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" style="color:var(--muted)">No links submitted yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

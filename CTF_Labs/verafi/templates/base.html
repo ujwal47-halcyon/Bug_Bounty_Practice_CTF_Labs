@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Verafi — Digital Banking{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="/" class="brand">
+      <span class="brand-mark">V</span>
+      <span class="brand-word">Verafi</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/transactions">Transactions</a>
+      <a href="/search?q=payments">Search</a>
+      <a href="/login">Log in</a>
+      <a href="/flags">Flags</a>
+      <a href="/signup" class="nav-cta">Open account</a>
+    </nav>
+  </div>
+</header>
+<main>
+  {% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>© 2026 Verafi Financial Technologies · Local practice build — not a real bank.</div>
+    <div>
+      <a href="/robots.txt">robots.txt</a>
+      <a href="/login">Sign in</a>
+      <a href="/signup">Open account</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

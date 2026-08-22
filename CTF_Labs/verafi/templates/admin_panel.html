@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <span class="badge-open">⚠ access controlled only by client-editable "role" cookie</span>
+  <h2>Ops Console</h2>
+
+  <div class="widget" style="margin-bottom:20px;">
+    <h3>All users</h3>
+    <table class="log-table">
+      <thead><tr><th>ID</th><th>Email</th><th>Nickname</th><th>Role</th><th>Balance</th></tr></thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.nickname | safe }}</td>
+          <td><span class="role-pill {{ 'admin' if u.role == 'admin' else '' }}">{{ u.role }}</span></td>
+          <td>${{ "%.2f"|format(u.balance) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="widget">
+    <h3>Security log — recent /transactions requests</h3>
+    <table class="log-table">
+      <thead><tr><th>Time</th><th>User-Agent</th><th>Referer</th><th>X-Forwarded-For</th><th>Accept-Language</th></tr></thead>
+      <tbody>
+        {% for l in logs %}
+        <tr>
+          <td>{{ l.ts }}</td>
+          <td>{{ l.user_agent | safe }}</td>
+          <td>{{ l.referer | safe }}</td>
+          <td>{{ l.x_forwarded_for | safe }}</td>
+          <td>{{ l.accept_language | safe }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" style="color:var(--muted)">No requests logged yet — visit /transactions first.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="fine-print" style="margin-top:18px;">Fraud bot report: <a href="/internal/fraud-bot-log">/internal/fraud-bot-log</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel">
+    <h1>Open your Verafi account</h1>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+    <form method="post" id="signup-form" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" required>
+        <div class="hint" id="email-hint">Letters, numbers, dots and @ only.</div>
+      </div>
+      <div class="field">
+        <label for="nickname">Display nickname</label>
+        <input type="text" name="nickname" id="nickname" placeholder="How should we greet you?">
+        <div class="hint" id="nick-hint">Letters, numbers and spaces only.</div>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required minlength="8">
+      </div>
+      <button class="btn" type="submit">Create account</button>
+    </form>
+  </div>
+</section>
+<script>
+  var ALLOWED_EMAIL = /^[A-Za-z0-9.@]+$/;
+  var ALLOWED_NICK = /^[A-Za-z0-9 ]+$/;
+  var form = document.getElementById('signup-form');
+  var emailInput = document.getElementById('email');
+  var nickInput = document.getElementById('nickname');
+
+  form.addEventListener('submit', function (e) {
+    if (!ALLOWED_EMAIL.test(emailInput.value)) { e.preventDefault(); return; }
+    if (nickInput.value && !ALLOWED_NICK.test(nickInput.value)) { e.preventDefault(); return; }
+  });
+</script>
+{% endblock %}

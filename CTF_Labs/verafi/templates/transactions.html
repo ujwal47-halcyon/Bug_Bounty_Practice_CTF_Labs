@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <h2>Transactions</h2>
+  <p class="lead">Showing: {{ filt | safe }}</p>
+
+  <div class="widget">
+    <div class="cm-row"><span>Grocery — Whole Foods</span><span>-$62.10</span></div>
+    <div class="cm-row"><span>Payroll deposit</span><span>+$3,200.00</span></div>
+    <div class="cm-row"><span>Transfer to Priya R.</span><span>-$150.00</span></div>
+  </div>
+
+  {% if referer %}
+  <p class="fine-print">You arrived here from: {{ referer | safe }}</p>
+  {% endif %}
+</section>
+{% endblock %}

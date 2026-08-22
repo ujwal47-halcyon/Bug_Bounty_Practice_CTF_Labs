@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Banking, rebuilt for 2026</span>
+      <h1>Money that moves<br>as fast as you do.</h1>
+      <p class="sub">Instant transfers, real-time fraud protection, and a savings
+      engine that actually works for you. Verafi is banking without the wait.</p>
+      <div class="btn-row">
+        <a href="/signup" class="btn" style="width:auto; padding:12px 22px; text-decoration:none;">Open a free account</a>
+        <a href="/login" class="btn ghost" style="text-decoration:none;">Log in</a>
+      </div>
+    </div>
+    <div class="card-mock">
+      <span class="cm-label">Available balance</span>
+      <div class="cm-balance">$4,820.55</div>
+      <div class="cm-row"><span>Grocery — Whole Foods</span><span>-$62.10</span></div>
+      <div class="cm-row"><span>Payroll deposit</span><span>+$3,200.00</span></div>
+      <div class="cm-row"><span>Transfer to Priya R.</span><span>-$150.00</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="wrap">
+    <span>256-BIT ENCRYPTION</span>
+    <span>FDIC-STYLE INSURED*</span>
+    <span>SOC 2 TYPE II*</span>
+    <span>24/7 FRAUD MONITORING</span>
+  </div>
+</div>
+
+<section class="block wrap">
+  <h2>Everything your money needs</h2>
+  <p class="lead">One account, built to actually keep up with how you spend, save, and move money.</p>
+  <div class="feature-grid">
+    <div class="feature-card"><h3>Instant transfers</h3><p>Send and receive money in seconds, not business days.</p></div>
+    <div class="feature-card"><h3>Smart savings</h3><p>Automated round-ups and goal-based saving that runs itself.</p></div>
+    <div class="feature-card"><h3>Real-time fraud alerts</h3><p>Every transaction is screened before it clears.</p></div>
+    <div class="feature-card"><h3>Two-factor security</h3><p>Your account, protected by more than just a password.</p></div>
+  </div>
+</section>
+{% endblock %}

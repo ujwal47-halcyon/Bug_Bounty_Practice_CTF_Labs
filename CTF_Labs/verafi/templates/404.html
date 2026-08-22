@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel" style="text-align:center;">
+    <h1>404 — Page not found</h1>
+    <p class="sub">We couldn't find: {{ path | safe }}</p>
+    <a class="btn small" style="text-decoration:none; display:inline-block;" href="/">Back to Verafi</a>
+  </div>
+</section>
+{% endblock %}

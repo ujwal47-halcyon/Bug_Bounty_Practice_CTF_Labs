@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel">
+    <h1>Enter your code</h1>
+    <p class="sub">We sent a 6-digit code to your email.</p>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+    <form method="post">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" value="{{ email }}" required>
+      </div>
+      <div class="field">
+        <label for="otp">6-digit code</label>
+        <input type="text" name="otp" id="otp" maxlength="6" placeholder="000000" required>
+      </div>
+      <!-- dev_override left wired up from the QA build, never removed -->
+      <input type="hidden" name="dev_override" value="false">
+      <button class="btn" type="submit">Verify</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

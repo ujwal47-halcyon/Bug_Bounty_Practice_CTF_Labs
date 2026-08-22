@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap block">
+  <h2>Flag submission</h2>
+  <p class="lead">Progress: {{ solved_count }} / {{ total }} flags found.</p>
+
+  {% if message %}
+    {% if message[0] == "correct" %}
+      <div class="success-banner">Correct! Challenge solved: <strong>{{ message[1] }}</strong></div>
+    {% else %}
+      <div class="error-banner">Not a recognized flag — keep looking.</div>
+    {% endif %}
+  {% endif %}
+
+  <form method="post" style="max-width:480px;">
+    <div class="field">
+      <label for="flag">Paste a flag (format: VERAFI{...})</label>
+      <input type="text" name="flag" id="flag" placeholder="VERAFI{...}" autocomplete="off">
+    </div>
+    <button class="btn small" type="submit">Submit</button>
+  </form>
+
+  <div class="widget" style="margin-top:24px; max-width:640px;">
+    <h3>Challenge checklist</h3>
+    <table class="log-table">
+      <thead><tr><th>Status</th><th>Challenge ID</th></tr></thead>
+      <tbody>
+        {% for cid in challenge_ids %}
+        <tr>
+          <td>{{ "✅" if cid in solved else "🔒" }}</td>
+          <td>{{ cid }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="fine-print">Flags never appear on any visible page — they're delivered in response headers on the exact request that proves each bug. Inspect responses with <code>curl -i</code>, <code>curl -v</code>, or your proxy.</p>
+</section>
+{% endblock %}

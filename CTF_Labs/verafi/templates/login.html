@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <div class="panel">
+    <h1>Log in to Verafi</h1>
+    <p class="sub">Welcome back — enter your details to continue.</p>
+    {% if error %}<div class="error-banner">{{ error }}</div>{% endif %}
+
+    <form method="post" id="login-form">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+      </div>
+
+      <!-- Verafi Human Check widget -->
+      <!-- NOTE(dev): stubbed for local/dev testing, real siteverify call
+           goes in before GA. data-sitekey below is the dev testkey. -->
+      <div class="cf-widget" id="cf-widget" data-sitekey="0x4AAAAAAAdevkey000000">
+        <div class="cf-row" id="cf-row-idle">
+          <span class="cf-spinner-slot"><input type="checkbox" id="cf-check"></span>
+          <label for="cf-check" id="cf-label">Verify you are human</label>
+          <span class="cf-brand">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7v6c0 5 4 9 10 9s10-4 10-9V7l-10-5z" fill="#F6821F"/></svg>
+            Verafi&nbsp;Turnstile
+          </span>
+        </div>
+      </div>
+      <input type="hidden" name="cf-turnstile-response" id="cf-token" value="">
+
+      <button class="btn" type="submit">Log in</button>
+    </form>
+    <p class="fine-print">Don't have an account? <a href="/signup">Open one free</a>.</p>
+  </div>
+</section>
+
+<script>
+  // Simulates the real widget's checkbox -> spinner -> verified sequence.
+  // NOTE(dev): this only ever runs client-side and writes a locally
+  // generated token into the hidden field — there is no round trip to a
+  // real challenge server anywhere in this flow.
+  document.getElementById('cf-check').addEventListener('change', function () {
+    var row = document.getElementById('cf-row-idle');
+    var label = document.getElementById('cf-label');
+    var tokenField = document.getElementById('cf-token');
+    if (this.checked) {
+      this.disabled = true;
+      label.textContent = 'Verifying…';
+      row.classList.add('cf-checking');
+      setTimeout(function () {
+        label.textContent = 'Success!';
+        row.classList.remove('cf-checking');
+        row.classList.add('cf-verified');
+        var rand = Array.from({length: 32}, function () {
+          return 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)];
+        }).join('');
+        tokenField.value = '0.' + rand + '.' + Date.now();
+      }, 900);
+    } else {
+      label.textContent = 'Verify you are human';
+      tokenField.value = '';
+    }
+  });
+</script>
+{% endblock %}
