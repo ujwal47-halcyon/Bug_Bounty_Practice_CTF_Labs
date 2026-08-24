@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Comment Details - TechNova Admin{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .detail-header {
+        background: var(--dark);
+        color: white;
+        padding: 2rem;
+        margin: -2rem -2rem 2rem -2rem;
+        border-radius: 0;
+    }
+
+    .detail-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .back-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+        color: white;
+    }
+
+    .detail-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detail-label {
+        font-size: 0.85rem;
+        color: var(--gray);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        font-size: 1.1rem;
+        color: var(--dark);
+        font-weight: 600;
+    }
+
+    .comment-content {
+        margin-top: 2rem;
+    }
+
+    .comment-content h3 {
+        font-size: 1.5rem;
+        color: var(--dark);
+        margin-bottom: 1rem;
+    }
+
+    .comment-text {
+        color: var(--dark);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        padding: 1.5rem;
+        background: var(--light);
+        border-radius: 12px;
+    }
+
+    .rating-display {
+        color: var(--accent);
+        font-size: 1.5rem;
+    }
+
+    .verified-badge {
+        background: var(--success);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="detail-header">
+        <a href="/admin/dashboard" class="back-link">← Back to Dashboard</a>
+        <h1>Product Comment #{{ comment.id }}</h1>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">Username</span>
+                <span class="detail-value">{{ comment.username|safe }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Product</span>
+                <span class="detail-value">{{ comment.product_id|replace('-', ' ')|title }}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Rating</span>
+                <span class="detail-value rating-display">
+                    {% for i in range(comment.rating|int) %}⭐{% endfor %}
+                </span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Verified Purchase</span>
+                <span class="detail-value">
+                    {% if comment.verified_purchase %}
+                    <span class="verified-badge">✓ Verified</span>
+                    {% else %}
+                    No
+                    {% endif %}
+                </span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Posted</span>
+                <span class="detail-value">{{ comment.timestamp[:10] }}</span>
+            </div>
+        </div>
+
+        <div class="comment-content">
+            <h3>Customer Feedback</h3>
+            <div class="comment-text">
+                {{ comment.comment|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

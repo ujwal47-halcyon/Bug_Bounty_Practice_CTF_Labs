@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "product_id": "ai-assistant-plus",
+    "username": "Ujwal<>",
+    "rating": "5",
+    "comment": "happy",
+    "timestamp": "2026-08-03T23:01:49.134828",
+    "verified_purchase": false
+  },
+  {
+    "id": 2,
+    "product_id": "ai-assistant-plus",
+    "username": "Ujwal<>",
+    "rating": "5",
+    "comment": "good",
+    "timestamp": "2026-08-03T23:03:00.783832",
+    "verified_purchase": false
+  }
+]

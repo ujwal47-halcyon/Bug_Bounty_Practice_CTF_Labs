@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product_id|replace('-', ' ')|title }} - TechNova{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .product-detail-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .product-detail-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .product-detail-hero .price {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .product-detail-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin: 3rem 0;
+    }
+
+    .specs-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .specs-card h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+    }
+
+    .spec-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .spec-item:last-child {
+        border-bottom: none;
+    }
+
+    .spec-label {
+        font-weight: 600;
+        color: var(--gray);
+    }
+
+    .spec-value {
+        color: var(--dark);
+    }
+
+    .product-features {
+        list-style: none;
+    }
+
+    .product-features li {
+        padding: 0.5rem 0;
+        color: var(--dark);
+    }
+
+    .comments-section {
+        margin: 4rem 0;
+    }
+
+    .comments-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--dark);
+    }
+
+    .comment-form {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .comment-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .comment-author {
+        font-weight: 700;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .verified-badge {
+        background: var(--success);
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .comment-rating {
+        color: var(--accent);
+    }
+
+    .comment-body {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    .comment-timestamp {
+        font-size: 0.85rem;
+        color: var(--gray);
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .product-detail-content {
+            grid-template-columns: 1fr;
+        }
+
+        .product-detail-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="product-detail-hero">
+    <h1>{{ product_id|replace('-', ' ')|title }}</h1>
+    <div class="price">$299</div>
+    <p>Premium smart home technology for modern living</p>
+</div>
+
+<div class="container">
+    <div class="product-detail-content">
+        <div class="specs-card">
+            <h2>Technical Specifications</h2>
+            <div class="spec-item">
+                <span class="spec-label">Processor</span>
+                <span class="spec-value">Neural Engine X1</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Connectivity</span>
+                <span class="spec-value">WiFi 7, Thread, Zigbee, Z-Wave</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Display</span>
+                <span class="spec-value">10" 4K Touchscreen</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Voice Support</span>
+                <span class="spec-value">Multi-language AI</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Storage</span>
+                <span class="spec-value">256GB Local + Cloud</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Warranty</span>
+                <span class="spec-value">3 Years Premium</span>
+            </div>
+        </div>
+
+        <div class="specs-card">
+            <h2>Key Features</h2>
+            <ul class="product-features">
+                <li>🎯 Supports 200+ smart devices simultaneously</li>
+                <li>🗣️ Advanced natural language processing</li>
+                <li>🔒 Bank-grade encryption for all data</li>
+                <li>📱 Seamless mobile app integration</li>
+                <li>🌙 Intelligent automation and routines</li>
+                <li>⚡ Energy efficiency monitoring</li>
+                <li>🔄 Regular firmware updates</li>
+                <li>💬 24/7 customer support</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="comments-section">
+        <h2>Customer Comments & Feedback</h2>
+
+        <div class="comment-form">
+            <h3 style="margin-bottom: 1.5rem;">Share Your Experience</h3>
+            <form method="POST" action="/product/{{ product_id }}/comment">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select name="rating" class="form-control">
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Good</option>
+                        <option value="3">⭐⭐⭐ Average</option>
+                        <option value="2">⭐⭐ Poor</option>
+                        <option value="1">⭐ Terrible</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Comment</label>
+                    <textarea name="comment" class="form-control" rows="4" required placeholder="Tell us about your experience with this product..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" name="verified">
+                        <span>I am a verified purchaser</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">Post Comment</button>
+            </form>
+        </div>
+
+        <div class="comments-list">
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            {{ comment.username|safe }}
+                            {% if comment.verified_purchase %}
+                            <span class="verified-badge">✓ Verified Purchase</span>
+                            {% endif %}
+                        </div>
+                        <div class="comment-rating">
+                            {% for i in range(comment.rating|int) %}⭐{% endfor %}
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        {{ comment.comment|safe }}
+                    </div>
+                    <div class="comment-timestamp">
+                        Posted on {{ comment.timestamp[:10] }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <p style="text-align: center; color: var(--gray);">No comments yet. Be the first to share your experience!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
