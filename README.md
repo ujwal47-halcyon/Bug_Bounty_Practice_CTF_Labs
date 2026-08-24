@@ -10,3 +10,5 @@ Day 5: Understood and Practiced No Rate Limit, BAC and XSS.
 Day 6: Understood and Practiced XSS header and XSS Reflected.
 
 Day 7: Continuation of XSS.
+
+Day 8: understood and practiced Stored XSS.
