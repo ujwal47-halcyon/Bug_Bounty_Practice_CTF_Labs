@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}TechNova - Future of Smart Living{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 6rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #60a5fa, #34d399);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 700px;
+        margin: 0 auto 2rem;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+    }
+
+    .feature-card p {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    .stats-section {
+        background: var(--dark);
+        color: white;
+        padding: 4rem 2rem;
+        margin: 4rem 0;
+    }
+
+    .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .stat-item h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #60a5fa, #34d399);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.1rem;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        border-radius: 24px;
+        margin: 4rem 0;
+    }
+
+    .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .btn-white {
+        background: white;
+        color: var(--primary);
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s;
+        display: inline-block;
+        font-size: 1.1rem;
+    }
+
+    .btn-white:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to TechNova</h1>
+    <p>Experience the future today with our AI-powered smart home solutions. Seamlessly integrate your life with cutting-edge technology designed for 2026 and beyond.</p>
+    <div class="hero-buttons">
+        <a href="/products" class="btn-primary">Explore Products</a>
+        <a href="/reviews" class="btn-secondary">Read Reviews</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🏠</div>
+            <h3>Smart Home Hub</h3>
+            <p>Control every aspect of your home from a single, intuitive interface. Voice commands, automation, and AI-driven insights.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Assistant</h3>
+            <p>Your personal AI companion that learns your preferences and anticipates your needs before you even ask.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Advanced Security</h3>
+            <p>Military-grade encryption with facial recognition, motion detection, and real-time threat assessment.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Energy Optimization</h3>
+            <p>Reduce your carbon footprint by up to 40% with intelligent energy monitoring and automated efficiency.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Mobile Integration</h3>
+            <p>Seamless control from anywhere in the world. iOS, Android, and wearable device support.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>IoT Ecosystem</h3>
+            <p>Connect with over 10,000+ compatible devices. Works with all major smart home platforms.</p>
+        </div>
+    </div>
+</div>
+
+<div class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <h2>2M+</h2>
+            <p>Active Users</p>
+        </div>
+        <div class="stat-item">
+            <h2>98%</h2>
+            <p>Satisfaction Rate</p>
+        </div>
+        <div class="stat-item">
+            <h2>150+</h2>
+            <p>Countries</p>
+        </div>
+        <div class="stat-item">
+            <h2>24/7</h2>
+            <p>Support</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="cta-section">
+        <h2>Ready to Transform Your Home?</h2>
+        <p>Join millions of satisfied customers who have already made the switch to smart living.</p>
+        <a href="/products" class="btn-white">Get Started Today</a>
+    </div>
+</div>
+{% endblock %}

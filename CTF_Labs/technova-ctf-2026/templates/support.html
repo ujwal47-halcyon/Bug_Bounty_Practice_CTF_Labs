@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Support - TechNova{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .support-hero {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .support-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .support-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    .support-form-section {
+        margin: 3rem 0;
+    }
+
+    .support-form {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .support-form h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--dark);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .support-hero h1 {
+            font-size: 2rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="support-hero">
+    <h1>Customer Support</h1>
+    <p>We're here to help 24/7. Submit a ticket and we'll get back to you soon.</p>
+</div>
+
+<div class="container">
+    <div class="support-form-section">
+        <div class="support-form">
+            <h2>Submit a Support Ticket</h2>
+            <form method="POST" action="/support/submit">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <input type="text" name="subject" class="form-control" placeholder="Brief description of your issue" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority *</label>
+                        <select name="priority" class="form-control" required>
+                            <option value="low">Low - General inquiry</option>
+                            <option value="medium" selected>Medium - Issue affecting usage</option>
+                            <option value="high">High - Critical issue</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Message *</label>
+                    <textarea name="message" class="form-control" rows="8" placeholder="Please describe your issue in detail..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Ticket</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
