@@ -1,4 +1,4 @@
-# TechNova CTF Lab 2026 - Stored XSS Challenge
+# TechNova CTF Lab 2026 - Stored XSS Challenge.
 
 <div align="center">
 
@@ -6,7 +6,7 @@
 ![Vulnerability](https://img.shields.io/badge/Vulnerability-Stored%20XSS-red?style=for-the-badge)
 ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner%20to%20Intermediate-yellow?style=for-the-badge)
 
-**A realistic 2026 smart home tech company website with intentional stored XSS vulnerabilities for CTF training and bug bounty practice.**
+**A realistic 2026 smart home tech company website with intentional stored XSS vulnerabilities for CTF training and bug bounty practice**
 
 </div>
 
