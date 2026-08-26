@@ -12,3 +12,5 @@ Day 6: Understood and Practiced XSS header and XSS Reflected.
 Day 7: Continuation of XSS.
 
 Day 8: understood and practiced Stored XSS.
+
+Day 9: Understood and practiced XSS types.
