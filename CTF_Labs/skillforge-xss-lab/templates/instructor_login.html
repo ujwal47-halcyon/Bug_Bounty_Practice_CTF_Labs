@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Instructor Login - SkillForge{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 16px;
+        padding: 3rem;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        max-width: 450px;
+        width: 100%;
+        border: 1px solid var(--border);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .login-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin: 0 auto 1.5rem;
+    }
+
+    .login-header h1 {
+        font-size: 2rem;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+        color: var(--gray);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-icon">👨‍🏫</div>
+            <h1>Instructor Login</h1>
+            <p>Access your instructor dashboard</p>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/instructor/login">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%;">Sign In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

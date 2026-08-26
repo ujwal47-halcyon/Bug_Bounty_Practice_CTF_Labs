@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course_id|replace('-', ' ')|title }} - SkillForge{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .course-hero {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        padding: 3rem 2rem;
+        color: white;
+    }
+
+    .course-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+
+    .course-hero .instructor {
+        font-size: 1.1rem;
+        opacity: 0.95;
+        margin-bottom: 1rem;
+    }
+
+    .course-hero .meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .course-hero .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 2px solid var(--border);
+        margin: 2rem 0;
+    }
+
+    .tab {
+        padding: 1rem 2rem;
+        background: transparent;
+        border: none;
+        font-weight: 700;
+        color: var(--gray);
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+    }
+
+    .tab:hover {
+        color: var(--primary);
+    }
+
+    .review-form, .qa-form {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .review-card, .qa-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .review-header, .qa-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .review-author, .qa-author {
+        font-weight: 700;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .completed-badge {
+        background: var(--success);
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .review-rating {
+        color: var(--accent);
+        font-size: 1.1rem;
+    }
+
+    .review-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .review-text, .qa-text {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    .review-timestamp, .qa-timestamp {
+        font-size: 0.85rem;
+        color: var(--gray);
+        margin-top: 0.5rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .course-hero h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="course-hero">
+    <div class="container">
+        <h1>{{ course_id|replace('-', ' ')|title }}</h1>
+        <p class="instructor">Instructor: Expert Teacher • 4.9 ⭐ Rating</p>
+        <div class="meta">
+            <div class="meta-item">📚 12 hours of content</div>
+            <div class="meta-item">👥 45,200 students</div>
+            <div class="meta-item">🎓 Certificate included</div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('reviews')">Reviews</button>
+        <button class="tab" onclick="showTab('qa')">Q&A</button>
+    </div>
+
+    <div id="reviews-section">
+        <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Student Reviews</h2>
+
+        <div class="review-form">
+            <h3 style="margin-bottom: 1.5rem;">Share Your Experience</h3>
+            <form method="POST" action="/course/{{ course_id }}/review">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="student_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <select name="rating" class="form-control">
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ Good</option>
+                            <option value="3">⭐⭐⭐ Average</option>
+                            <option value="2">⭐⭐ Poor</option>
+                            <option value="1">⭐ Terrible</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Review Title</label>
+                    <input type="text" name="review_title" class="form-control" placeholder="Summarize your experience" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea name="review_text" class="form-control" rows="4" placeholder="Tell us about your experience with this course..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" name="completed">
+                        <span>I have completed this course</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Review</button>
+            </form>
+        </div>
+
+        <div class="reviews-list">
+            {% if reviews %}
+                {% for review in reviews %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            {{ review.student_name|safe }}
+                            {% if review.completed %}
+                            <span class="completed-badge">✓ Completed</span>
+                            {% endif %}
+                        </div>
+                        <div class="review-rating">
+                            {% for i in range(review.rating|int) %}⭐{% endfor %}
+                        </div>
+                    </div>
+                    <div class="review-title">{{ review.review_title|safe }}</div>
+                    <div class="review-text">
+                        {{ review.review_text|safe }}
+                    </div>
+                    <div class="review-timestamp">
+                        Posted on {{ review.timestamp[:10] }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <p style="text-align: center; color: var(--gray);">No reviews yet. Be the first to share your experience!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="qa-section" style="display: none;">
+        <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Course Q&A</h2>
+
+        <div class="qa-form">
+            <h3 style="margin-bottom: 1.5rem;">Ask a Question</h3>
+            <form method="POST" action="/course/{{ course_id }}/ask">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="student_name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Question Title</label>
+                    <input type="text" name="question_title" class="form-control" placeholder="What would you like to know?" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Question Details</label>
+                    <textarea name="question_text" class="form-control" rows="4" placeholder="Provide more context for your question..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Ask Question</button>
+            </form>
+        </div>
+
+        <div class="qa-list">
+            {% if qa_posts %}
+                {% for qa in qa_posts %}
+                <div class="qa-card">
+                    <div class="qa-header">
+                        <div class="qa-author">{{ qa.student_name|safe }}</div>
+                        <div style="color: var(--gray); font-size: 0.9rem;">{{ qa.status }}</div>
+                    </div>
+                    <div class="review-title">{{ qa.question_title|safe }}</div>
+                    <div class="qa-text">
+                        {{ qa.question_text|safe }}
+                    </div>
+                    <div class="qa-timestamp">
+                        Asked on {{ qa.timestamp[:10] }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <p style="text-align: center; color: var(--gray);">No questions yet. Be the first to ask!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(tab) {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.classList.remove('active'));
+
+    if (tab === 'reviews') {
+        document.getElementById('reviews-section').style.display = 'block';
+        document.getElementById('qa-section').style.display = 'none';
+        tabs[0].classList.add('active');
+    } else {
+        document.getElementById('reviews-section').style.display = 'none';
+        document.getElementById('qa-section').style.display = 'block';
+        tabs[1].classList.add('active');
+    }
+}
+</script>
+{% endblock %}

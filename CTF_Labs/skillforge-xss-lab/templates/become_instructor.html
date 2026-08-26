@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Become an Instructor - SkillForge{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .instructor-hero {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .instructor-hero h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+
+    .instructor-hero p {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .application-form {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        max-width: 900px;
+        margin: 3rem auto;
+        border: 1px solid var(--border);
+    }
+
+    .application-form h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--dark);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .instructor-hero h1 {
+            font-size: 2rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="instructor-hero">
+    <h1>Become an Instructor</h1>
+    <p>Share your knowledge with thousands of students worldwide. Join our community of expert instructors.</p>
+</div>
+
+<div class="container">
+    <div class="application-form">
+        <h2>Instructor Application</h2>
+        <form method="POST" action="/become-instructor/apply">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="full_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Professional Bio *</label>
+                <textarea name="bio" class="form-control" rows="4" placeholder="Tell us about your professional background..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Area of Expertise *</label>
+                <input type="text" name="expertise" class="form-control" placeholder="e.g., Web Development, Data Science, UI/UX Design" required>
+            </div>
+
+            <div class="form-group">
+                <label>Years of Experience *</label>
+                <select name="experience" class="form-control" required>
+                    <option value="">Select experience level</option>
+                    <option value="1-3">1-3 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="5-10">5-10 years</option>
+                    <option value="10+">10+ years</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>LinkedIn Profile</label>
+                    <input type="text" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+                <div class="form-group">
+                    <label>Portfolio Website</label>
+                    <input type="text" name="portfolio" class="form-control" placeholder="https://yourportfolio.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Teaching Philosophy *</label>
+                <textarea name="teaching_philosophy" class="form-control" rows="5" placeholder="Describe your approach to teaching and why you want to be an instructor..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Application</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

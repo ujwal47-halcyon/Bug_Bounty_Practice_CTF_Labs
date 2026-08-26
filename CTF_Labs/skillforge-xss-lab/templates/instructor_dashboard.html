@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+
+{% block title %}Instructor Dashboard - SkillForge{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 2.5rem 2rem;
+        margin: -2rem -2rem 2rem -2rem;
+        border-radius: 0;
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 900;
+    }
+
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .stat-card h3 {
+        color: var(--gray);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .stat-card .stat-number {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section {
+        margin-bottom: 3rem;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+    }
+
+    .data-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .data-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table th {
+        background: var(--dark);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 700;
+    }
+
+    .data-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .data-table tr:hover {
+        background: var(--light);
+    }
+
+    .status-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+
+    .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-new {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    .status-unanswered {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .view-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .view-link:hover {
+        text-decoration: underline;
+    }
+
+    .logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>Instructor Dashboard</h1>
+                <p>Manage your courses and student interactions</p>
+            </div>
+            <a href="/instructor/logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Course Reviews</h3>
+            <div class="stat-number">{{ reviews|length }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Applications</h3>
+            <div class="stat-number">{{ applications|length }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Forum Posts</h3>
+            <div class="stat-number">{{ forum_posts|length }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Questions</h3>
+            <div class="stat-number">{{ qa_posts|length }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Feedback</h3>
+            <div class="stat-number">{{ feedback_list|length }}</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Recent Course Reviews</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Rating</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if reviews %}
+                        {% for review in reviews[-10:]|reverse %}
+                        <tr>
+                            <td>#{{ review.id }}</td>
+                            <td>{{ review.student_name }}</td>
+                            <td>{{ review.course_id|replace('-', ' ')|title }}</td>
+                            <td>{% for i in range(review.rating|int) %}⭐{% endfor %}</td>
+                            <td><span class="status-badge status-pending">{{ review.status }}</span></td>
+                            <td><a href="/instructor/review/{{ review.id }}" class="view-link">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">No reviews yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Instructor Applications</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Expertise</th>
+                        <th>Experience</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if applications %}
+                        {% for app in applications[-10:]|reverse %}
+                        <tr>
+                            <td>#{{ app.id }}</td>
+                            <td>{{ app.full_name }}</td>
+                            <td>{{ app.expertise }}</td>
+                            <td>{{ app.experience }}</td>
+                            <td><span class="status-badge status-pending">{{ app.status }}</span></td>
+                            <td><a href="/instructor/application/{{ app.id }}" class="view-link">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">No applications yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Community Forum Posts</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Author</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if forum_posts %}
+                        {% for post in forum_posts[-10:]|reverse %}
+                        <tr>
+                            <td>#{{ post.id }}</td>
+                            <td>{{ post.author }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.category }}</td>
+                            <td>{{ post.timestamp[:10] }}</td>
+                            <td><a href="/instructor/forum-post/{{ post.id }}" class="view-link">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">No forum posts yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Student Questions</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Question</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if qa_posts %}
+                        {% for qa in qa_posts[-10:]|reverse %}
+                        <tr>
+                            <td>#{{ qa.id }}</td>
+                            <td>{{ qa.student_name }}</td>
+                            <td>{{ qa.course_id|replace('-', ' ')|title }}</td>
+                            <td>{{ qa.question_title }}</td>
+                            <td><span class="status-badge status-unanswered">{{ qa.status }}</span></td>
+                            <td><a href="/instructor/question/{{ qa.id }}" class="view-link">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">No questions yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Platform Feedback</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if feedback_list %}
+                        {% for feedback in feedback_list[-10:]|reverse %}
+                        <tr>
+                            <td>#{{ feedback.id }}</td>
+                            <td>{{ feedback.name }}</td>
+                            <td>{{ feedback.feedback_type }}</td>
+                            <td>{{ feedback.subject }}</td>
+                            <td><span class="status-badge status-new">{{ feedback.status }}</span></td>
+                            <td><a href="/instructor/feedback/{{ feedback.id }}" class="view-link">View Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">No feedback yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

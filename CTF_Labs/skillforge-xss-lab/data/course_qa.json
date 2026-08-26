@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "course_id": "web-development-masterclass",
+    "student_name": "ujwal<>",
+    "question_title": "how was it<>",
+    "question_text": "happy",
+    "timestamp": "2026-08-03T23:22:50.699864",
+    "status": "unanswered"
+  },
+  {
+    "id": 2,
+    "course_id": "web-development-masterclass",
+    "student_name": "ujwal><script>alert(1)</script>",
+    "question_title": "happy",
+    "question_text": "1234",
+    "timestamp": "2026-08-03T23:27:33.990333",
+    "status": "unanswered"
+  }
+]

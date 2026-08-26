@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}SkillForge - Master New Skills Online{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        padding: 5rem 2rem;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.5px;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .stats-section {
+        background: white;
+        padding: 3rem 0;
+        margin: -2rem 0 3rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+        padding: 0 2rem;
+    }
+
+    .stat-item h2 {
+        font-size: 3rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+        color: var(--gray);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+        border: 1px solid var(--border);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+    }
+
+    .feature-card p {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        border-radius: 24px;
+        margin: 4rem 0;
+    }
+
+    .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+    }
+
+    .cta-section p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Master New Skills Online</h1>
+        <p>Learn from expert instructors with our comprehensive courses in technology, business, design, and more. Start your learning journey today.</p>
+        <div class="hero-buttons">
+            <a href="/courses" class="btn-primary" style="background: white; color: var(--primary); font-size: 1.1rem; padding: 0.85rem 2rem;">Explore Courses</a>
+            <a href="/become-instructor" class="btn-secondary" style="border-color: white; color: white; font-size: 1.1rem; padding: 0.85rem 2rem;">Become an Instructor</a>
+        </div>
+    </div>
+</div>
+
+<div class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <h2>50K+</h2>
+            <p>Active Students</p>
+        </div>
+        <div class="stat-item">
+            <h2>2,500+</h2>
+            <p>Online Courses</p>
+        </div>
+        <div class="stat-item">
+            <h2>95%</h2>
+            <p>Satisfaction Rate</p>
+        </div>
+        <div class="stat-item">
+            <h2>180+</h2>
+            <p>Countries</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2 style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">Why Choose SkillForge?</h2>
+    <p style="text-align: center; color: var(--gray); font-size: 1.1rem; margin-bottom: 3rem;">Industry-leading platform for online learning</p>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Expert Instructors</h3>
+            <p>Learn from industry professionals with real-world experience and proven teaching expertise.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Comprehensive Content</h3>
+            <p>Access thousands of courses covering programming, design, business, marketing, and more.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Certificates</h3>
+            <p>Earn recognized certificates upon course completion to showcase your new skills.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Active Community</h3>
+            <p>Connect with fellow learners, ask questions, and share knowledge in our vibrant community.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Learn Anywhere</h3>
+            <p>Access courses on any device - desktop, tablet, or mobile. Learn at your own pace.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Lifetime Access</h3>
+            <p>Once enrolled, enjoy lifetime access to course materials and all future updates.</p>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Start Learning?</h2>
+        <p>Join thousands of students already mastering new skills on SkillForge.</p>
+        <a href="/courses" class="btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2.5rem;">Browse All Courses</a>
+    </div>
+</div>
+{% endblock %}

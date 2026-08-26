@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Community Forum - SkillForge{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .community-hero {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    .community-hero h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+    }
+
+    .forum-form {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .post-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        transition: all 0.3s;
+    }
+
+    .post-card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .post-author {
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    .post-category {
+        background: var(--primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .post-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .post-content {
+        color: var(--gray);
+        line-height: 1.7;
+    }
+
+    .post-timestamp {
+        font-size: 0.85rem;
+        color: var(--gray);
+        margin-top: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="community-hero">
+    <h1>Community Forum</h1>
+    <p>Connect with fellow learners and share your knowledge</p>
+</div>
+
+<div class="container">
+    <div class="forum-form">
+        <h3 style="margin-bottom: 1.5rem;">Create a Post</h3>
+        <form method="POST" action="/community/post">
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" name="author" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" class="form-control" required>
+                    <option value="General">General Discussion</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Design">Design</option>
+                    <option value="Business">Business</option>
+                    <option value="Career">Career Advice</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Post Title</label>
+                <input type="text" name="title" class="form-control" placeholder="What's on your mind?" required>
+            </div>
+
+            <div class="form-group">
+                <label>Content</label>
+                <textarea name="content" class="form-control" rows="5" placeholder="Share your thoughts, ask questions, or start a discussion..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Post to Community</button>
+        </form>
+    </div>
+
+    <h2 style="font-size: 2rem; margin: 3rem 0 1.5rem;">Recent Posts</h2>
+
+    <div class="posts-list">
+        {% if posts %}
+            {% for post in posts %}
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-author">{{ post.author|safe }}</div>
+                    <div class="post-category">{{ post.category }}</div>
+                </div>
+                <div class="post-title">{{ post.title|safe }}</div>
+                <div class="post-content">
+                    {{ post.content|safe }}
+                </div>
+                <div class="post-timestamp">
+                    Posted on {{ post.timestamp[:10] }}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <p style="text-align: center; color: var(--gray);">No posts yet. Be the first to start a discussion!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
