@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Thank You - AutoElite Motors{% endblock %}
+
+{% block extra_css %}
+<style>
+    .thank-you-container {
+        max-width: 600px;
+        margin: 4rem auto;
+        background: white;
+        padding: 4rem 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        font-size: 3rem;
+        color: white;
+    }
+
+    .thank-you-container h2 {
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .thank-you-container p {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .btn-home {
+        display: inline-block;
+        background: #e94560;
+        color: white;
+        padding: 1rem 3rem;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .btn-home:hover {
+        background: #d63850;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="thank-you-container">
+        <div class="success-icon">✓</div>
+        <h2>Thank You!</h2>
+        <p>
+            {% if message %}
+                {{ message }}
+            {% else %}
+                Your submission has been received. Our team will review it and get back to you shortly.
+            {% endif %}
+        </p>
+        <a href="/" class="btn-home">Return to Home</a>
+
+        <div class="info-box">
+            <strong>✅ Submission Successful</strong><br>
+            Your data has been stored and will appear in the admin dashboard.<br>
+            Login as admin to see if your payload executed.
+        </div>
+    </div>
+</div>
+{% endblock %}

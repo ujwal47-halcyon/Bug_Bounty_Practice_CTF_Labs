@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Feedback - AutoElite Motors{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+    }
+
+    .form-container {
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        background: white;
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .vulnerability-note {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .vulnerability-note strong {
+        color: #856404;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e1e8ed;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #e94560;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-hint {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.3rem;
+    }
+
+    .btn-submit {
+        width: 100%;
+        background: #e94560;
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+        background: #d63850;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Share Your Experience</h1>
+    <p>Your feedback helps us improve our service</p>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <div class="vulnerability-note">
+            <strong>🐛 BLIND XSS SINK #2:</strong> Feedback stored without sanitization.
+            Executes when admin reviews submissions. Perfect for practicing blind XSS techniques.
+        </div>
+
+        <form action="/submit-feedback" method="POST">
+            <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Jane Smith">
+                <div class="form-hint">Test injection: &lt;img src=x onerror=alert('XSS')&gt;</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="jane@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="rating">Overall Rating *</label>
+                <select id="rating" name="rating" required>
+                    <option value="">Select a rating</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                    <option value="4">⭐⭐⭐⭐ Good</option>
+                    <option value="3">⭐⭐⭐ Average</option>
+                    <option value="2">⭐⭐ Below Average</option>
+                    <option value="1">⭐ Poor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Your Experience *</label>
+                <textarea id="experience" name="experience" required placeholder="Tell us about your visit, the vehicle you purchased, our staff..."></textarea>
+                <div class="form-hint">Primary XSS sink - blind execution in admin panel</div>
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Additional Comments</label>
+                <textarea id="comments" name="comments" placeholder="Suggestions for improvement or additional feedback?"></textarea>
+                <div class="form-hint">Another injection point for multi-field testing</div>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Feedback</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

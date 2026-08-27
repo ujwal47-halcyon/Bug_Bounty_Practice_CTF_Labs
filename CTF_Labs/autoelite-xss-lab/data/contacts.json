@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "ujwal<script>alert('XSS')</script>",
+    "email": "ujwalcloud@gmail.com",
+    "phone": "<script>alert('XSS')</script>",
+    "interested_car": "General Inquiry",
+    "message": "<script>alert('XSS')</script>",
+    "timestamp": "2026-08-04 09:52:25",
+    "status": "unread"
+  }
+]

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Contact #{{ contact.id }} - Admin{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-container {
+        max-width: 900px;
+        margin: 2rem auto 3rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .detail-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detail-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .btn-back {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        padding: 0.6rem 1.5rem;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .btn-back:hover {
+        background: rgba(255,255,255,0.3);
+    }
+
+    .vulnerability-banner {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem 2rem;
+        color: #856404;
+        font-weight: 600;
+    }
+
+    .detail-content {
+        padding: 2rem;
+    }
+
+    .metadata-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .metadata-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .metadata-label {
+        font-size: 0.85rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .metadata-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1a1a2e;
+    }
+
+    .detail-section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .detail-section:last-child {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .detail-value {
+        color: #333;
+        padding: 1.2rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: 1.6;
+        border-left: 4px solid #e94560;
+    }
+
+    .xss-warning {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <div class="detail-header">
+        <h2>Contact Request #{{ contact.id }}</h2>
+        <a href="/admin/dashboard" class="btn-back">← Dashboard</a>
+    </div>
+
+    <div class="vulnerability-banner">
+        🐛 BLIND XSS EXECUTION POINT: Content below is rendered using |safe filter (no escaping)
+    </div>
+
+    <div class="detail-content">
+        <div class="metadata-grid">
+            <div class="metadata-item">
+                <div class="metadata-label">Submission Date</div>
+                <div class="metadata-value">{{ contact.timestamp }}</div>
+            </div>
+            <div class="metadata-item">
+                <div class="metadata-label">Interested Vehicle</div>
+                <div class="metadata-value">{{ contact.interested_car }}</div>
+            </div>
+            <div class="metadata-item">
+                <div class="metadata-label">Status</div>
+                <div class="metadata-value">
+                    {% if contact.status == 'unread' %}🆕 Unread{% else %}✅ Read{% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">
+                👤 Customer Name
+                <span class="xss-warning">XSS SINK</span>
+            </div>
+            <!-- VULNERABLE: |safe filter disables auto-escaping -->
+            <div class="detail-value">{{ contact.name|safe }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">
+                ✉️ Email Address
+                <span class="xss-warning">XSS SINK</span>
+            </div>
+            <!-- VULNERABLE: |safe filter disables auto-escaping -->
+            <div class="detail-value">{{ contact.email|safe }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">
+                📱 Phone Number
+                <span class="xss-warning">XSS SINK</span>
+            </div>
+            <!-- VULNERABLE: |safe filter disables auto-escaping -->
+            <div class="detail-value">{{ contact.phone|safe if contact.phone else '(Not provided)' }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">
+                💬 Message
+                <span class="xss-warning">XSS SINK</span>
+            </div>
+            <!-- VULNERABLE: |safe filter disables auto-escaping -->
+            <div class="detail-value">{{ contact.message|safe }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

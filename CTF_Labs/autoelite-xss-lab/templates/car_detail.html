@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}{{ car.make }} {{ car.model }} - AutoElite Motors{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+    }
+
+    .detail-container {
+        max-width: 1000px;
+        margin: -2rem auto 3rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        overflow: hidden;
+    }
+
+    .car-image-large {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 8rem;
+    }
+
+    .car-detail-content {
+        padding: 3rem;
+    }
+
+    .car-badge {
+        display: inline-block;
+        background: #e94560;
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .car-title {
+        font-size: 2.5rem;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .car-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .spec-item {
+        text-align: center;
+    }
+
+    .spec-label {
+        font-size: 0.85rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .spec-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+    .description-section {
+        margin: 2rem 0;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .description-section h3 {
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .description-section p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 1.05rem;
+    }
+
+    .price-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 8px;
+        margin: 2rem 0;
+    }
+
+    .price-label {
+        color: #aaa;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .price-value {
+        font-size: 3rem;
+        color: #e94560;
+        font-weight: 700;
+    }
+
+    .btn-contact {
+        background: #e94560;
+        color: white;
+        padding: 1rem 3rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: background 0.2s;
+        display: inline-block;
+    }
+
+    .btn-contact:hover {
+        background: #d63850;
+    }
+
+    .btn-back {
+        display: inline-block;
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .btn-back:hover {
+        color: #e94560;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-hero"></div>
+
+<div class="container">
+    <a href="/" class="btn-back">← Back to Inventory</a>
+
+    <div class="detail-container">
+        <div class="car-image-large">🚗</div>
+
+        <div class="car-detail-content">
+            <div class="car-badge">{{ car.year }} Model</div>
+            <h1 class="car-title">{{ car.make }} {{ car.model }}</h1>
+            <p class="car-subtitle">Premium {{ car.fuel }} Vehicle</p>
+
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-label">Year</div>
+                    <div class="spec-value">{{ car.year }}</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Mileage</div>
+                    <div class="spec-value">{{ car.mileage|int|string|reverse|batch(3)|map('join')|join(',')|reverse }}</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Fuel Type</div>
+                    <div class="spec-value">{{ car.fuel }}</div>
+                </div>
+            </div>
+
+            <div class="description-section">
+                <h3>Vehicle Description</h3>
+                <p>{{ car.desc }}</p>
+            </div>
+
+            <div class="price-section">
+                <div>
+                    <div class="price-label">Asking Price</div>
+                    <div class="price-value">${{ car.price|int|string|reverse|batch(3)|map('join')|join(',')|reverse }}</div>
+                </div>
+                <a href="/contact?car={{ cid }}" class="btn-contact">Contact Sales Team</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

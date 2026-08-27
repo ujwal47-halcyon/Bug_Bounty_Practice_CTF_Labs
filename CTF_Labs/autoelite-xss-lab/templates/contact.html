@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Sales - AutoElite Motors{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 3rem 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+    }
+
+    .form-container {
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        background: white;
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .vulnerability-note {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .vulnerability-note strong {
+        color: #856404;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e1e8ed;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #e94560;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-hint {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.3rem;
+    }
+
+    .btn-submit {
+        width: 100%;
+        background: #e94560;
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+        background: #d63850;
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+    }
+
+    .info-card h3 {
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .info-card p {
+        color: #555;
+        margin: 0.5rem 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Contact Our Sales Team</h1>
+    <p>Fill out the form below and we'll get back to you within 24 hours</p>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <div class="vulnerability-note">
+            <strong>🐛 BLIND XSS SINK #1:</strong> This form stores user input without sanitization.
+            Payloads execute when admin views submissions in the dashboard.
+        </div>
+
+        <form action="/submit-contact" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+                <div class="form-hint">Try injecting here: &lt;script&gt;alert('XSS')&lt;/script&gt;</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                <div class="form-hint">Another injection point for testing</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+            </div>
+
+            <div class="form-group">
+                <label for="interested_car">Interested In</label>
+                <select id="interested_car" name="interested_car">
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="BMW M4 Competition">BMW M4 Competition</option>
+                    <option value="Mercedes-Benz GLE 450">Mercedes-Benz GLE 450</option>
+                    <option value="Tesla Model S Plaid">Tesla Model S Plaid</option>
+                    <option value="Porsche 911 Turbo S">Porsche 911 Turbo S</option>
+                    <option value="Audi RS7 Sportback">Audi RS7 Sportback</option>
+                    <option value="Lucid Air Dream Edition">Lucid Air Dream Edition</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message *</label>
+                <textarea id="message" name="message" required placeholder="Tell us about your needs, questions, or schedule a test drive..."></textarea>
+                <div class="form-hint">Primary XSS injection point - test various payloads here</div>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+
+        <div class="info-card">
+            <h3>Other Contact Methods</h3>
+            <p><strong>Phone:</strong> (555) 123-4567</p>
+            <p><strong>Email:</strong> sales@autoelitemotors.com</p>
+            <p><strong>Address:</strong> 123 Luxury Drive, Beverly Hills, CA 90210</p>
+            <p><strong>Hours:</strong> Mon-Sat 9AM-8PM, Sun 10AM-6PM</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

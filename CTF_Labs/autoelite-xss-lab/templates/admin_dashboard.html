@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - AutoElite Motors{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dashboard-header h2 {
+        color: #1a1a2e;
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .admin-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .btn-logout {
+        background: #dc3545;
+        color: white;
+        padding: 0.6rem 1.5rem;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .btn-logout:hover {
+        background: #c82333;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #e94560;
+    }
+
+    .stat-label {
+        color: #666;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .section {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .section h3 {
+        color: #1a1a2e;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .vulnerability-warning {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .vulnerability-warning strong {
+        color: #856404;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table thead {
+        background: #f8f9fa;
+    }
+
+    .table th {
+        padding: 1rem;
+        text-align: left;
+        color: #1a1a2e;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .badge-new {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge-read {
+        background: #6c757d;
+        color: white;
+    }
+
+    .rating {
+        color: #ffc107;
+        font-size: 1.2rem;
+    }
+
+    .btn-view {
+        background: #007bff;
+        color: white;
+        padding: 0.5rem 1.2rem;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .btn-view:hover {
+        background: #0056b3;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #999;
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <h2>Admin Dashboard</h2>
+        <div class="header-actions">
+            <span class="admin-badge">👤 Admin</span>
+            <a href="/admin/logout" class="btn-logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="vulnerability-warning">
+        <strong>⚠️ XSS EXECUTION ZONE:</strong> This dashboard renders user submissions without sanitization.
+        Viewing contact/feedback details will execute any injected JavaScript payloads.
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-header">
+                <div class="stat-label">Total Feedback</div>
+                <div class="stat-icon">📝</div>
+            </div>
+            <div class="stat-number">{{ feedback|length }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <div class="stat-label">Contact Requests</div>
+                <div class="stat-icon">✉️</div>
+            </div>
+            <div class="stat-number">{{ contacts|length }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <div class="stat-label">Unread Items</div>
+                <div class="stat-icon">🔔</div>
+            </div>
+            <div class="stat-number">{{ contacts|selectattr('status', 'equalto', 'unread')|list|length + feedback|rejectattr('reviewed')|list|length }}</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h3>Recent Feedback Submissions</h3>
+        </div>
+
+        {% if feedback %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in feedback|reverse %}
+                <tr>
+                    <td><strong>#{{ item.id }}</strong></td>
+                    <td>{{ item.name[:50] }}</td>
+                    <td>{{ item.email[:30] }}</td>
+                    <td class="rating">
+                        {% for i in range(item.rating|int) %}⭐{% endfor %}
+                    </td>
+                    <td>{{ item.timestamp }}</td>
+                    <td>
+                        {% if item.reviewed %}
+                        <span class="badge badge-read">Reviewed</span>
+                        {% else %}
+                        <span class="badge badge-new">New</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/admin/view-feedback/{{ item.id }}" class="btn-view">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <p>No feedback submissions yet</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h3>Contact Requests</h3>
+        </div>
+
+        {% if contacts %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Interested In</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in contacts|reverse %}
+                <tr>
+                    <td><strong>#{{ item.id }}</strong></td>
+                    <td>{{ item.name[:30] }}</td>
+                    <td>{{ item.email[:30] }}</td>
+                    <td>{{ item.phone[:20] or 'N/A' }}</td>
+                    <td>{{ item.interested_car[:25] }}</td>
+                    <td>{{ item.timestamp }}</td>
+                    <td>
+                        {% if item.status == 'unread' %}
+                        <span class="badge badge-new">Unread</span>
+                        {% else %}
+                        <span class="badge badge-read">Read</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/admin/view-contact/{{ item.id }}" class="btn-view">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">✉️</div>
+            <p>No contact requests yet</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
