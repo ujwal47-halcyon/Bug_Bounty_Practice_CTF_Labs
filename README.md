@@ -16,3 +16,5 @@ Day 8: understood and practiced Stored XSS.
 Day 9: Understood and practiced XSS types.
 
 Day 10: Understood and practiced Stored XSS.
+
+Day 11: Understood and practiced different kind of XSS.
