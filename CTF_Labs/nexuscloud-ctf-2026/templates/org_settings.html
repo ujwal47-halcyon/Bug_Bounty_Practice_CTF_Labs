@@ -1,0 +1,75 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Workspace Settings — NexusCloud{% endblock %}
+
+{% block content %}
+<div style="max-width: 750px; margin: 0 auto;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Workspace & Webhook Settings</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Configure organization header metadata and webhook integrations.</p>
+
+    {% if success %}
+        <div style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #6ee7b7; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            ✅ Workspace settings saved successfully. Updated audit log created.
+        </div>
+    {% endif %}
+
+    <div class="ctf-banner">
+        <div class="ctf-banner-icon">🛡️</div>
+        <div>
+            <div class="ctf-banner-title">Client-Side Header Syntax Filter Active</div>
+            <div class="ctf-banner-text">Client JS enforces strict alphanumeric & header format rules on <code>notification_header</code> and <code>custom_metadata</code>. Bypass client JS to trigger DOM Stored XSS in Admin Audit Logs.</div>
+        </div>
+    </div>
+
+    <div id="validation-alert" class="client-alert">
+        <strong>⚠️ CLIENT VALIDATION ERROR:</strong> Invalid header syntax or forbidden characters detected.
+        <br><br>
+        <em>💡 Bypass hint: Intercept <code>POST /settings/org</code> and inject <code>&lt;svg onload=alert(1)&gt;</code> into <code>notification_header</code>!</em>
+    </div>
+
+    <div class="form-card">
+        <form id="org-form" action="/settings/org" method="POST">
+            <div class="form-group">
+                <label for="org_name">Organization Name</label>
+                <input type="text" id="org_name" name="org_name" value="{{ org.org_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="webhook_url">Webhook Endpoint URL</label>
+                <input type="url" id="webhook_url" name="webhook_url" value="{{ org.webhook_url }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="notification_header">Notification Header Name *</label>
+                <input type="text" id="notification_header" name="notification_header" value="{{ org.notification_header }}" required>
+                <div class="form-hint">Client JS blocks tags. Rendered in Admin Security Audit Logs.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="custom_metadata">Custom Audit Metadata</label>
+                <input type="text" id="custom_metadata" name="custom_metadata" value="{{ org.custom_metadata }}">
+                <div class="form-hint">Secondary injection point for Audit Log view.</div>
+            </div>
+
+            <button type="submit" class="btn-primary">Save Workspace Configuration</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('org-form').addEventListener('submit', function(e) {
+        const header = document.getElementById('notification_header').value;
+        const meta = document.getElementById('custom_metadata').value;
+        const alertBox = document.getElementById('validation-alert');
+
+        const xssCheck = /[<>"'();]/g;
+
+        if (xssCheck.test(header) || xssCheck.test(meta)) {
+            e.preventDefault();
+            alertBox.style.display = 'block';
+            alert("⚠️ Client-Side Validation Blocked Submission!\n\nSpecial HTML characters are rejected by browser JS.\nModify the request body in Burp Suite to send raw payload!");
+            return false;
+        }
+    });
+</script>
+{% endblock %}

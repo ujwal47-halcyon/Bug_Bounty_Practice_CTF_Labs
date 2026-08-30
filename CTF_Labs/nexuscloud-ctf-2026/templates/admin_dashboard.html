@@ -1,0 +1,81 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Admin Dashboard — NexusCloud{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1 style="font-size: 2rem;">Admin Operations Dashboard</h1>
+        <p style="color: var(--text-muted);">Manage customer tickets, pending OAuth applications, and workspace audit logs.</p>
+    </div>
+    <div>
+        <a href="/admin/audit-logs" class="btn-primary" style="display: inline-block; width: auto; padding: 0.6rem 1.2rem; text-decoration: none; background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+            📋 View Security Audit Logs
+        </a>
+    </div>
+</div>
+
+<h2 style="font-size: 1.3rem; margin-top: 2rem; color: #93c5fd;">🎟️ Support Tickets (Stored XSS Execution Zone 1)</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Category</th>
+                <th>Urgency</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>#{{ t.id }}</td>
+                <!-- VULNERABLE: Rendered raw -->
+                <td>{{ t.subject|safe }}</td>
+                <td>{{ t.category }}</td>
+                <td><span class="badge badge-pending">{{ t.urgency }}</span></td>
+                <td>{{ t.created_at }}</td>
+                <td><span class="badge badge-unread">{{ t.status }}</span></td>
+                <td><a href="/admin/ticket/{{ t.id }}" style="color:var(--accent-indigo); text-weight:600; text-decoration:none;">Inspect Ticket &rarr;</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No support tickets logged yet. Submit one from the front-end!</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h2 style="font-size: 1.3rem; margin-top: 3rem; color: #c084fc;">🔌 Pending OAuth Apps (Stored XSS Execution Zone 3)</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>App Name</th>
+                <th>Callback URI</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in apps %}
+            <tr>
+                <td>#{{ a.id }}</td>
+                <!-- VULNERABLE: Rendered raw -->
+                <td>{{ a.app_name|safe }}</td>
+                <td><code>{{ a.redirect_uri }}</code></td>
+                <td><span class="badge badge-pending">{{ a.status }}</span></td>
+                <td>{{ a.created_at }}</td>
+                <td><a href="/admin/apps/{{ a.id }}" style="color:var(--accent-purple); text-weight:600; text-decoration:none;">Review App &rarr;</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No OAuth applications registered yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

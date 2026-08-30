@@ -1,0 +1,46 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Inspect Ticket #{{ ticket.id }} — Admin Portal{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <a href="/admin/dashboard" style="color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 1.5rem;">&larr; Back to Dashboard</a>
+
+    <div class="card" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+            <div>
+                <span style="font-size: 0.85rem; color: var(--accent-indigo); font-weight: 700;">TICKET #{{ ticket.id }}</span>
+                <!-- VULNERABLE SINK: Subject rendered with |safe filter -->
+                <h1 style="font-size: 1.8rem; margin-top: 0.2rem;">{{ ticket.subject|safe }}</h1>
+            </div>
+            <span class="badge badge-unread" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">{{ ticket.urgency }} Urgency</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-primary); padding: 1rem; border-radius: 8px;">
+            <div><strong>Submitted By:</strong> {{ ticket.submitted_by }}</div>
+            <div><strong>Category:</strong> {{ ticket.category }}</div>
+            <div><strong>Timestamp:</strong> {{ ticket.created_at }}</div>
+            <div><strong>Status:</strong> {{ ticket.status }}</div>
+        </div>
+
+        <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-main);">Incident Details & System Logs:</h3>
+        
+        <!-- VULNERABLE STORED XSS SINK: Rendered with |safe Jinja2 filter -->
+        <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; line-height: 1.6;">
+            {{ ticket.details|safe }}
+        </div>
+    </div>
+
+    <div class="ctf-banner">
+        <div class="ctf-banner-icon">🎯</div>
+        <div>
+            <div class="ctf-banner-title">STORED XSS SINK HIT!</div>
+            <div class="ctf-banner-text">
+                This page uses the Jinja2 <code>|safe</code> filter to render the ticket subject and details directly into the DOM without escaping HTML tags.
+                <br>
+                If your payload was successfully stored, JavaScript will execute right here in the Admin's browser session!
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

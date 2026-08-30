@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NexusCloud — Enterprise Cloud Infrastructure{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="brand">
+            <div class="brand-icon">N</div>
+            <span>NexusCloud <small style="font-size:0.65rem; color:#818cf8; text-transform:uppercase; letter-spacing:1px; margin-left:4px;">2026 Enterprise</small></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/ticket/create">Support Tickets</a></li>
+            <li><a href="/settings/org">Workspace Settings</a></li>
+            <li><a href="/developer/apps/register">OAuth Apps</a></li>
+            <li><a href="/flags" style="color:#34d399; font-weight:700;">🚩 Flags Tracker</a></li>
+            {% if session.get('admin') %}
+                <li><a href="/admin/dashboard" class="btn-nav" style="background:#ef4444;">Admin Portal</a></li>
+                <li><a href="/admin/logout">Logout</a></li>
+            {% else %}
+                <li><a href="/admin/login" class="btn-nav">Admin Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NexusCloud Technologies Inc. All rights reserved. | Controlled CTF Security Practice Lab</p>
+    </footer>
+</body>
+</html>

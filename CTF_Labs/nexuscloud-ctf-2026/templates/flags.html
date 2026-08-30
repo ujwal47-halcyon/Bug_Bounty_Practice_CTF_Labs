@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}CTF Flags Tracker — NexusCloud{% endblock %}
+
+{% block content %}
+<div style="max-width: 750px; margin: 0 auto;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🚩 CTF Flags Tracker</h1>
+    <p style="color: #9ca3af; margin-bottom: 2rem;">Submit flags found in HTTP response headers after successful Stored XSS exploitation.</p>
+
+    {% if message %}
+        <div style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #6ee7b7; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 1rem;">Total Flags: {{ total }}</h3>
+        <p style="color: #9ca3af; margin-bottom: 1.5rem;">Flags appear as HTTP response headers (e.g., <code>X-Flag-*</code>) when you successfully inject and trigger stored XSS.</p>
+
+        <div style="display: grid; gap: 0.75rem;">
+            {% for key, val in flags_dict.items() %}
+                <div style="background: {% if val in submitted %}rgba(16,185,129,0.1){% else %}#111827{% endif %}; border: 1px solid {% if val in submitted %}rgba(16,185,129,0.3){% else %}#374151{% endif %}; border-radius: 8px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="color: {% if val in submitted %}#34d399{% else %}#f9fafb{% endif %};">{{ key.replace('_', ' ').title() }}</strong>
+                        {% if val in submitted %}
+                            <span style="color: #34d399; font-size: 0.85rem; margin-left: 0.5rem;">✅ Solved</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="form-card">
+        <h3 style="margin-bottom: 1rem;">Submit Flag</h3>
+        <form action="/flags" method="POST">
+            <div class="form-group">
+                <label for="flag">Flag Value</label>
+                <input type="text" id="flag" name="flag" required placeholder="VERAFI{...}">
+                <div class="form-hint">Look for X-Flag-* headers in response to successful XSS exploitation.</div>
+            </div>
+            <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">Verify Flag</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

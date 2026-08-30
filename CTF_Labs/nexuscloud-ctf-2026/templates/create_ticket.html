@@ -1,0 +1,84 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Create Support Ticket — NexusCloud{% endblock %}
+
+{% block content %}
+<div style="max-width: 750px; margin: 0 auto;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Submit Enterprise Support Ticket</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Log a priority incident with our 24/7 cloud engineering team.</p>
+
+    <div class="ctf-banner">
+        <div class="ctf-banner-icon">🛡️</div>
+        <div>
+            <div class="ctf-banner-title">Client-Side Defense Active</div>
+            <div class="ctf-banner-text">The form below uses client-side JavaScript (<code>onSubmit</code> event listener) to reject HTML tags and event handlers. Directly typing <code>&lt;script&gt;</code> or <code>onerror=</code> will trigger a browser popup alert.</div>
+        </div>
+    </div>
+
+    <div id="validation-alert" class="client-alert">
+        <strong>⚠️ CLIENT VALIDATION ERROR:</strong>
+        <span id="alert-text">Suspicious tags/script execution patterns detected. Form submission blocked on client-side.</span>
+        <br><br>
+        <em>💡 Hint: Intercept the POST request in Burp Suite / curl and add payload to the HTTP request body!</em>
+    </div>
+
+    <div class="form-card">
+        <form id="ticket-form" action="/ticket/create" method="POST">
+            <div class="form-group">
+                <label for="subject">Issue Subject *</label>
+                <input type="text" id="subject" name="subject" required placeholder="e.g. Cluster Latency Spike in us-east-1">
+                <div class="form-hint">Client JS restricts special characters in subject.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="Technical Support">Technical Support</option>
+                    <option value="Billing & Invoicing">Billing & Invoicing</option>
+                    <option value="Security Incident">Security Incident</option>
+                    <option value="API Rate Limits">API Rate Limits</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="urgency">Urgency Level</label>
+                <select id="urgency" name="urgency">
+                    <option value="Low">Low (General Inquiry)</option>
+                    <option value="Medium" selected>Medium (Standard Issue)</option>
+                    <option value="Critical">Critical (Production Down)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="details">Detailed Incident Logs & Description *</label>
+                <textarea id="details" name="details" rows="6" required placeholder="Describe steps to reproduce or stack trace..."></textarea>
+                <div class="form-hint">Primary Stored XSS sink in Admin Panel. Client JS validates content.</div>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Support Ticket</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // STRICT CLIENT-SIDE ONLY VALIDATION
+    // Can be easily bypassed via Burp Suite, Postman, or python requests!
+    document.getElementById('ticket-form').addEventListener('submit', function(e) {
+        const subject = document.getElementById('subject').value;
+        const details = document.getElementById('details').value;
+        const alertBox = document.getElementById('validation-alert');
+        const alertText = document.getElementById('alert-text');
+
+        // Regex patterns blocking scripts, event handlers, and tags
+        const xssRegex = /<[\s\S]*?>|javascript:|onerror\s*=|onload\s*=|onclick\s*=|onmouseover\s*=/gi;
+
+        if (xssRegex.test(subject) || xssRegex.test(details)) {
+            e.preventDefault(); // Stop browser submission!
+            alertText.innerText = "Security Alert: Suspicious script tags (<script>, <img>, onerror, etc.) detected in ticket fields!";
+            alertBox.style.display = 'block';
+            alert("⚠️ Client-Side Validation Blocked Submission!\n\nPayloads cannot be submitted directly through the browser form.\nUse Burp Suite to intercept the POST request!");
+            return false;
+        }
+    });
+</script>
+{% endblock %}

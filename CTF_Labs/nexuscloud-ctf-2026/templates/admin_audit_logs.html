@@ -1,0 +1,50 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Security Audit Logs — Admin Portal{% endblock %}
+
+{% block content %}
+<div style="max-width: 850px; margin: 0 auto;">
+    <a href="/admin/dashboard" style="color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 1.5rem;">&larr; Back to Dashboard</a>
+    
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">🔒 Security & Audit Logs</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">All workspace changes, webhook configs, and notification header metadata.</p>
+
+    <div class="ctf-banner">
+        <div class="ctf-banner-icon">🎯</div>
+        <div>
+            <div class="ctf-banner-title">STORED XSS SINK: Org Metadata Rendering</div>
+            <div class="ctf-banner-text">The Notification Header and Custom Metadata fields are rendered without HTML escaping below. If XSS payload was stored via request bypass, it will execute here.</div>
+        </div>
+    </div>
+
+    {% if org and org is mapping %}
+    <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="margin-bottom: 1rem; color: #a78bfa;">Current Workspace Configuration</h3>
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 0.5rem 1rem; line-height: 1.8;">
+            <strong>Organization:</strong>
+            <span>{{ org.org_name }}</span>
+
+            <strong>Webhook URL:</strong>
+            <code>{{ org.webhook_url }}</code>
+
+            <!-- VULNERABLE SINK: Notification Header rendered with |safe -->
+            <strong>Notification Header:</strong>
+            <span style="background: var(--bg-primary); padding: 0.3rem 0.6rem; border-radius: 4px;">{{ org.notification_header|safe }}</span>
+
+            <!-- VULNERABLE SINK: Custom Metadata rendered with |safe -->
+            <strong>Custom Metadata:</strong>
+            <span style="background: var(--bg-primary); padding: 0.3rem 0.6rem; border-radius: 4px;">{{ org.custom_metadata|safe }}</span>
+
+            {% if org.updated_at %}
+            <strong>Last Updated:</strong>
+            <span>{{ org.updated_at }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <p style="color: var(--text-muted);">No workspace settings configured yet. Update settings from <a href="/settings/org" style="color: var(--accent-indigo);">Workspace Settings</a>.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

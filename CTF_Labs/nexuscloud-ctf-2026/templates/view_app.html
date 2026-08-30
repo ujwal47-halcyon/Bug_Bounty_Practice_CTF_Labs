@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Review OAuth App — Admin{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <a href="/admin/dashboard" style="color: #9ca3af; text-decoration: none;">&larr; Back</a>
+    <div class="card" style="margin-top: 1.5rem;">
+        <span style="font-size: 0.85rem; color: #a78bfa; font-weight: 700;">APP #{{ app_item.id }} | {{ app_item.status }}</span>
+        <!-- VULNERABLE: rendered with |safe -->
+        <h2 style="margin: 0.5rem 0 1.5rem;">{{ app_item.app_name|safe }}</h2>
+        <p><strong>Client ID:</strong> <code>{{ app_item.client_id }}</code></p>
+        <p><strong>Callback URI:</strong> <code>{{ app_item.redirect_uri }}</code></p>
+        <p><strong>Submitted:</strong> {{ app_item.created_at }}</p>
+        <h3 style="margin: 1.5rem 0 0.5rem;">Integration Details:</h3>
+        <!-- VULNERABLE STORED XSS SINK -->
+        <div style="background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 1.25rem;">
+            {{ app_item.app_description|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

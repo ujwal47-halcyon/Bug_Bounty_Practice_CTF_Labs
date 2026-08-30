@@ -1,0 +1,44 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <span class="hero-tag">✨ Next-Gen 2026 SaaS Infrastructure</span>
+    <h1>AI-Driven Cloud Computing & Autonomous DevOps</h1>
+    <p>Deploy enterprise microservices, execute distributed workloads, and manage custom API integrations seamlessly with NexusCloud.</p>
+</div>
+
+<div class="ctf-banner">
+    <div class="ctf-banner-icon">🎯</div>
+    <div>
+        <div class="ctf-banner-title">LAB OBJECTIVE: Client-Side Validation Bypass (Stored XSS)</div>
+        <div class="ctf-banner-text">
+            All user-facing forms feature <strong>strict Client-Side JavaScript validation</strong> that prevents typing XSS payloads into the browser.
+            <br>
+            <strong>Your Task:</strong> Use request interception tools (Burp Suite, OWASP ZAP, Postman, or <code>curl</code>) to bypass the browser's JavaScript controls and store payloads on the server!
+        </div>
+    </div>
+</div>
+
+<div class="grid-3">
+    <div class="card">
+        <div class="card-title">🎧 Support Ticket Desk</div>
+        <div class="card-desc">Submit priority infrastructure tickets. Uses client-side regex filtering to block HTML tags. Exploit stored XSS when admin staff review tickets.</div>
+        <br>
+        <a href="/ticket/create" style="color:var(--accent-indigo); text-decoration:none; font-weight:600;">Create Ticket &rarr;</a>
+    </div>
+
+    <div class="card">
+        <div class="card-title">⚙️ Workspace Settings</div>
+        <div class="card-desc">Configure enterprise webhook headers and notification metadata. Browser JS validates header syntax. Exploit stored XSS in Admin Audit Logs.</div>
+        <br>
+        <a href="/settings/org" style="color:var(--accent-indigo); text-decoration:none; font-weight:600;">Manage Settings &rarr;</a>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🔌 OAuth Integrations</div>
+        <div class="card-desc">Register custom developer integrations and OAuth callback apps. Client-side JS sanitizes description fields. Exploit stored XSS in Admin App Approval.</div>
+        <br>
+        <a href="/developer/apps/register" style="color:var(--accent-indigo); text-decoration:none; font-weight:600;">Register Integration &rarr;</a>
+    </div>
+</div>
+{% endblock %}

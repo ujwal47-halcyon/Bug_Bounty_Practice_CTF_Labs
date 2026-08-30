@@ -1,0 +1,74 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Register OAuth Application — NexusCloud{% endblock %}
+
+{% block content %}
+<div style="max-width: 750px; margin: 0 auto;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Register Developer OAuth Application</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Submit your integration for admin approval. API keys will be issued upon review.</p>
+
+    <div class="ctf-banner">
+        <div class="ctf-banner-icon">🛡️</div>
+        <div>
+            <div class="ctf-banner-title">Client-Side JavaScript Sanitizer Active</div>
+            <div class="ctf-banner-text">Browser JS strips or blocks HTML tag patterns from <code>app_name</code> and <code>app_description</code>. Only alphanumeric text and standard URL syntax allowed.</div>
+        </div>
+    </div>
+
+    <div id="validation-alert" class="client-alert">
+        <strong>⚠️ CLIENT VALIDATION ERROR:</strong> HTML tag patterns detected. Submission blocked.
+        <br><br>
+        <em>💡 Bypass hint: Send a crafted <code>POST /developer/apps/register</code> request with <code>app_description=&lt;img src=x onerror=alert(1)&gt;</code>!</em>
+    </div>
+
+    <div class="form-card">
+        <form id="app-form" action="/developer/apps/register" method="POST">
+            <div class="form-group">
+                <label for="app_name">Application Name *</label>
+                <input type="text" id="app_name" name="app_name" required placeholder="e.g. DataSync Connector">
+                <div class="form-hint">Client JS validates name format.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="redirect_uri">OAuth Callback URL *</label>
+                <input type="url" id="redirect_uri" name="redirect_uri" required placeholder="https://your-app.com/callback">
+            </div>
+
+            <div class="form-group">
+                <label for="app_description">Application Description *</label>
+                <textarea id="app_description" name="app_description" rows="5" required placeholder="Describe your integration, features, and use case..."></textarea>
+                <div class="form-hint">Primary injection point. Client JS blocks HTML. Renders unescaped in Admin App Review.</div>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit for Approval</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('app-form').addEventListener('submit', function(e) {
+        const name = document.getElementById('app_name').value;
+        const desc = document.getElementById('app_description').value;
+        const alertBox = document.getElementById('validation-alert');
+
+        const dangerousPatterns = [
+            /<script[\s\S]*?>/gi,
+            /<\/script>/gi,
+            /<img[\s\S]*?>/gi,
+            /<svg[\s\S]*?>/gi,
+            /<iframe[\s\S]*?>/gi,
+            /javascript\s*:/gi,
+            /on\w+\s*=/gi
+        ];
+
+        for (let pattern of dangerousPatterns) {
+            if (pattern.test(name) || pattern.test(desc)) {
+                e.preventDefault();
+                alertBox.style.display = 'block';
+                alert("⚠️ Client-Side Validation Blocked!\n\nSuspicious patterns detected in App Name or Description.\nUse Burp Suite or curl to bypass browser validation.");
+                return false;
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "app_name": "Ujwal<script>confirm(1)</script>",
+    "redirect_uri": "http://10.170.65.14:5000/developer/apps/register",
+    "app_description": "noice<script>confirm(2)</script>",
+    "client_id": "c4bfcef6d67079e9",
+    "status": "Pending Approval",
+    "created_at": "2026-08-04 12:15:27"
+  },
+  {
+    "id": 2,
+    "app_name": "ujwal<svg onload=alert(1)>",
+    "redirect_uri": "http://10.170.65.14:5000/developer/apps/register",
+    "app_description": "nice",
+    "client_id": "8f13163dfe2b2350",
+    "status": "Pending Approval",
+    "created_at": "2026-08-04 13:57:31"
+  }
+]
